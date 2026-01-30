@@ -7,6 +7,12 @@ import pontalMaceio2 from "@/assets/pontal-maceio-2.png";
 import pontalMaceio3 from "@/assets/pontal-maceio-3.png";
 import pontalMaceio4 from "@/assets/pontal-maceio-4.png";
 import pontalMaceio5 from "@/assets/pontal-maceio-5.png";
+import canoaQuebrada1 from "@/assets/canoa-quebrada-1.png";
+import canoaQuebrada2 from "@/assets/canoa-quebrada-2.png";
+import canoaQuebrada3 from "@/assets/canoa-quebrada-3.png";
+import canoaQuebrada4 from "@/assets/canoa-quebrada-4.png";
+import canoaQuebrada5 from "@/assets/canoa-quebrada-5.png";
+import canoaQuebrada6 from "@/assets/canoa-quebrada-6.png";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
@@ -44,8 +50,12 @@ const guideData: Record<Category, Place[]> = {
       distance: "25km", 
       rating: 4.8,
       images: [
-        { url: "https://images.unsplash.com/photo-1501950183564-3c8ac97d08ab?w=800", caption: "Falésias ao entardecer" },
-        { url: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?w=800", caption: "Praia de areias douradas" },
+        { url: canoaQuebrada1, caption: "Vista panorâmica com parapente" },
+        { url: canoaQuebrada2, caption: "Jangadas nas falésias" },
+        { url: canoaQuebrada3, caption: "Praia animada com turistas" },
+        { url: canoaQuebrada4, caption: "Vista aérea da orla" },
+        { url: canoaQuebrada5, caption: "Passeio de buggy nas dunas" },
+        { url: canoaQuebrada6, caption: "Falésias e mar cristalino" },
       ]
     },
     { 
