@@ -1,18 +1,89 @@
-import { motion } from "framer-motion";
+import { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { MapPin } from "lucide-react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+
 import heroImage from "@/assets/hero-property.png";
+import hero1 from "@/assets/hero-1.jpg";
+import hero2 from "@/assets/hero-2.jpg";
+import hero3 from "@/assets/hero-3.jpg";
+import hero4 from "@/assets/hero-4.jpg";
+import hero5 from "@/assets/hero-5.jpg";
+import hero6 from "@/assets/hero-6.jpg";
+import hero7 from "@/assets/hero-7.jpg";
+import hero8 from "@/assets/hero-8.jpg";
+import hero9 from "@/assets/hero-9.jpg";
+import hero10 from "@/assets/hero-10.jpg";
+import hero11 from "@/assets/hero-11.jpg";
+
+const heroImages = [heroImage, hero1, hero2, hero3, hero4, hero5, hero6, hero7, hero8, hero9, hero10, hero11];
 
 const Hero = () => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true },
+    [Autoplay({ delay: 5000, stopOnInteraction: false })]
+  );
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect);
+    return () => {
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  const scrollTo = useCallback(
+    (index: number) => {
+      if (!emblaApi) return;
+      emblaApi.scrollTo(index);
+    },
+    [emblaApi]
+  );
+
   return (
     <section className="relative min-h-[85vh] flex items-end overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <img
-          src={heroImage}
-          alt="Pontal Sereias - Casa de temporada em Fortim"
-          className="w-full h-full object-cover"
-        />
+      {/* Background Carousel */}
+      <div className="absolute inset-0" ref={emblaRef}>
+        <div className="flex h-full">
+          {heroImages.map((image, index) => (
+            <div
+              key={index}
+              className="flex-[0_0_100%] min-w-0 relative h-full"
+            >
+              <img
+                src={image}
+                alt={`Pontal Sereias - Foto ${index + 1}`}
+                className="w-full h-full object-contain md:object-cover"
+              />
+            </div>
+          ))}
+        </div>
         <div className="absolute inset-0 hero-overlay" />
+      </div>
+
+      {/* Carousel Indicators */}
+      <div className="absolute bottom-48 md:bottom-28 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        {heroImages.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => scrollTo(index)}
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+              index === selectedIndex
+                ? "bg-white w-8"
+                : "bg-white/50 hover:bg-white/70"
+            }`}
+            aria-label={`Ir para foto ${index + 1}`}
+          />
+        ))}
       </div>
 
       {/* Content */}
@@ -40,7 +111,7 @@ const Hero = () => {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-white/90 text-lg mb-4 font-light"
           >
-            Seu refúgio à beira-mar em Fortim, Ceará
+            Seu refúgio próximo ao mar em Fortim, Ceará
           </motion.p>
 
           {/* Location */}
@@ -51,7 +122,7 @@ const Hero = () => {
             className="inline-flex items-center gap-2 text-white/80"
           >
             <MapPin className="w-4 h-4" />
-            <span className="text-sm">Praia de Pontal de Maceió, Fortim - CE</span>
+            <span className="text-sm">Rua: Córrego do Maceió 456, Barra, Fortim-CE</span>
           </motion.div>
         </motion.div>
       </div>

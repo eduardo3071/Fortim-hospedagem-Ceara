@@ -27,7 +27,7 @@ const WeatherWidget = () => {
           viewport={{ once: true }}
           className="font-serif text-2xl font-semibold text-foreground mb-4 text-center"
         >
-          Clima em Fortim Agora
+          Clima em Fortim - Hoje
         </motion.h2>
 
         {/* Weather Card */}

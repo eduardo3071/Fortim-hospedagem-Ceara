@@ -13,6 +13,15 @@ import canoaQuebrada3 from "@/assets/canoa-quebrada-3.png";
 import canoaQuebrada4 from "@/assets/canoa-quebrada-4.png";
 import canoaQuebrada5 from "@/assets/canoa-quebrada-5.png";
 import canoaQuebrada6 from "@/assets/canoa-quebrada-6.png";
+import cantoBarra1 from "@/assets/canto-barra-1.png";
+import cantoBarra2 from "@/assets/canto-barra-2.png";
+import cantoBarra3 from "@/assets/canto-barra-3.png";
+import cantoBarra4 from "@/assets/canto-barra-4.png";
+import cumbuco1 from "@/assets/cumbuco-1.png";
+import cumbuco2 from "@/assets/cumbuco-2.png";
+import cumbuco3 from "@/assets/cumbuco-3.png";
+import cumbuco4 from "@/assets/cumbuco-4.png";
+import cumbuco5 from "@/assets/cumbuco-5.png";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
@@ -64,7 +73,10 @@ const guideData: Record<Category, Place[]> = {
       distance: "2,5 km", 
       rating: 4.5,
       images: [
-        { url: "https://images.unsplash.com/photo-1471922694854-ff1b63b20054?w=800", caption: "Mar calmo e relaxante" },
+        { url: cantoBarra1, caption: "Barraca à beira-mar" },
+        { url: cantoBarra2, caption: "Orla com barco azul" },
+        { url: cantoBarra3, caption: "Vista do mar e dunas" },
+        { url: cantoBarra4, caption: "Barcos ancorados" },
       ]
     },
     { 
@@ -73,8 +85,11 @@ const guideData: Record<Category, Place[]> = {
       distance: "172 km", 
       rating: 4.7,
       images: [
-        { url: "https://images.unsplash.com/photo-1502680390725-be18f9b9f5db?w=800", caption: "Kitesurf em ação" },
-        { url: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800", caption: "Ventos perfeitos" },
+        { url: cumbuco1, caption: "Passeio a cavalo na praia" },
+        { url: cumbuco2, caption: "Festival de kitesurf" },
+        { url: cumbuco3, caption: "Barracas e coqueiros" },
+        { url: cumbuco4, caption: "Arco-íris na praia" },
+        { url: cumbuco5, caption: "Letreiro Eu ❤️ Cumbuco" },
       ]
     },
   ],
