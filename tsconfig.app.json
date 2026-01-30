@@ -23,9 +23,17 @@
     "noFallthroughCasesInSwitch": false,
 
     "baseUrl": ".",
+<<<<<<< HEAD
+=======
+    "ignoreDeprecations": "5.0",
+>>>>>>> 694fa94 (chore: initial commit from Lovable project)
     "paths": {
       "@/*": ["./src/*"]
     }
   },
   "include": ["src"]
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 694fa94 (chore: initial commit from Lovable project)
