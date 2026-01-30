@@ -2,6 +2,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Utensils, Waves, ChevronRight, Camera } from "lucide-react";
 import { useState } from "react";
 import PlaceGallery from "./PlaceGallery";
+import pontalMaceio1 from "@/assets/pontal-maceio-1.png";
+import pontalMaceio2 from "@/assets/pontal-maceio-2.png";
+import pontalMaceio3 from "@/assets/pontal-maceio-3.png";
+import pontalMaceio4 from "@/assets/pontal-maceio-4.png";
+import pontalMaceio5 from "@/assets/pontal-maceio-5.png";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
@@ -26,9 +31,11 @@ const guideData: Record<Category, Place[]> = {
       distance: "50m", 
       rating: 5,
       images: [
-        { url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800", caption: "Vista panorâmica da praia" },
-        { url: "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800", caption: "Águas cristalinas" },
-        { url: "https://images.unsplash.com/photo-1473116763249-2faaef81ccda?w=800", caption: "Pôr do sol inesquecível" },
+        { url: pontalMaceio1, caption: "Vista panorâmica com coqueiros" },
+        { url: pontalMaceio2, caption: "Praia com bandeiras" },
+        { url: pontalMaceio3, caption: "Pôr do sol inesquecível" },
+        { url: pontalMaceio4, caption: "Jangadas coloridas" },
+        { url: pontalMaceio5, caption: "Vista da praia e dunas" },
       ]
     },
     { 
