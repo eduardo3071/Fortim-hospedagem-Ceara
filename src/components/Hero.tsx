@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { MapPin, Star } from "lucide-react";
-import heroImage from "@/assets/hero-beach.jpg";
+import { MapPin } from "lucide-react";
+import heroImage from "@/assets/hero-property.png";
 
 const Hero = () => {
   return (
@@ -9,7 +9,7 @@ const Hero = () => {
       <div className="absolute inset-0">
         <img
           src={heroImage}
-          alt="Pontal Sereias - Vista do paraíso em Fortim"
+          alt="Pontal Sereias - Casa de temporada em Fortim"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 hero-overlay" />
@@ -23,17 +23,6 @@ const Hero = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="max-w-lg mx-auto text-center"
         >
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full mb-4"
-          >
-            <Star className="w-4 h-4 text-sunset-gold fill-sunset-gold" />
-            <span className="text-white text-sm font-medium">Superhost no Airbnb</span>
-          </motion.div>
-
           {/* Title */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
