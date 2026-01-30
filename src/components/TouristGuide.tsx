@@ -34,7 +34,7 @@ const guideData: Record<Category, Place[]> = {
     { 
       name: "Praia de Pontal de Maceió", 
       description: "A mais bela do Ceará, com dunas e coqueirais", 
-      distance: "50m", 
+      distance: "3,9 km", 
       rating: 5,
       images: [
         { url: pontalMaceio1, caption: "Vista panorâmica com coqueiros" },
@@ -47,7 +47,7 @@ const guideData: Record<Category, Place[]> = {
     { 
       name: "Praia de Canoa Quebrada", 
       description: "Famosa pelas falésias coloridas", 
-      distance: "25km", 
+      distance: "32,7 km", 
       rating: 4.8,
       images: [
         { url: canoaQuebrada1, caption: "Vista panorâmica com parapente" },
@@ -59,9 +59,9 @@ const guideData: Record<Category, Place[]> = {
       ]
     },
     { 
-      name: "Praia de Fortim", 
-      description: "Tranquila e perfeita para banho", 
-      distance: "3km", 
+      name: "Praia Canto da Barra", 
+      description: "Ótima para Kitesurf, Passeios de Barco, Caminhadas e Contemplação", 
+      distance: "2,5 km", 
       rating: 4.5,
       images: [
         { url: "https://images.unsplash.com/photo-1471922694854-ff1b63b20054?w=800", caption: "Mar calmo e relaxante" },
@@ -70,7 +70,7 @@ const guideData: Record<Category, Place[]> = {
     { 
       name: "Praia de Cumbuco", 
       description: "Paraíso do kitesurf", 
-      distance: "80km", 
+      distance: "172 km", 
       rating: 4.7,
       images: [
         { url: "https://images.unsplash.com/photo-1502680390725-be18f9b9f5db?w=800", caption: "Kitesurf em ação" },
