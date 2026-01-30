@@ -36,7 +36,7 @@ const PlaceGallery = ({ isOpen, onClose, place }: PlaceGalleryProps) => {
 
   return (
     <Drawer open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DrawerContent className="max-h-[90vh] bg-background">
+      <DrawerContent className="h-[60vh] bg-background">
         <DrawerHeader className="text-left pb-2">
           <div className="flex items-center justify-between">
             <div>
@@ -75,12 +75,12 @@ const PlaceGallery = ({ isOpen, onClose, place }: PlaceGalleryProps) => {
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.3 }}
-                      className="relative aspect-[4/3] overflow-hidden rounded-xl"
+                      className="relative h-[35vh] overflow-hidden rounded-xl flex items-center justify-center bg-muted"
                     >
                       <img
                         src={image.url}
                         alt={image.caption || `${place.name} - Foto ${index + 1}`}
-                        className="w-full h-full object-cover"
+                        className="max-w-full max-h-full object-contain"
                       />
                       {image.caption && (
                         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
