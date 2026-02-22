@@ -191,34 +191,6 @@ const guideData: Record<Category, Place[]> = {
         { url: cumbuco5, caption: "Letreiro Eu ❤️ Cumbuco" },
       ]
     },
-    { 
-      name: "Lagoinha", 
-      description: "Visual cinematográfico com dunas e coqueiros", 
-      distance: "~210 km", 
-      rating: 4.8,
-      images: []
-    },
-    { 
-      name: "Flecheiras", 
-      description: "Piscinas naturais e clima sofisticado", 
-      distance: "~240 km", 
-      rating: 4.5,
-      images: []
-    },
-    { 
-      name: "Icaraizinho de Amontada", 
-      description: "Destino boutique, muito procurado por europeus", 
-      distance: "~300 km", 
-      rating: 4.6,
-      images: []
-    },
-    { 
-      name: "Jericoacoara", 
-      description: "Uma das praias mais famosas do mundo, dunas e lagoas cristalinas", 
-      distance: "~400 km", 
-      rating: 5,
-      images: []
-    },
   ],
   restaurantes: [
     { 
