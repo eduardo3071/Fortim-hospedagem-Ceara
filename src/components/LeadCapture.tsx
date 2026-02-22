@@ -44,8 +44,15 @@ const LeadCapture = () => {
     setIsSubmitted(true);
     toast({
       title: "Cadastro realizado! 🎉",
-      description: "Você receberá ofertas exclusivas em breve.",
+      description: "Redirecionando para o WhatsApp...",
     });
+
+    const msg = encodeURIComponent(
+      `Olá! Meu nome é ${name.trim()} e acabei de me cadastrar no site do Pontal Sereias. Gostaria de reivindicar meu cupom de 10% de desconto na próxima estadia! 🌴`
+    );
+    setTimeout(() => {
+      window.open(`https://wa.me/4915754439503?text=${msg}`, "_blank");
+    }, 1500);
   };
 
   return (
