@@ -1,11 +1,48 @@
 import { motion } from "framer-motion";
-import { Sun, Wind, Droplets, Thermometer } from "lucide-react";
+import { Sun, Wind, Droplets, Thermometer, Cloud, CloudRain, CloudLightning, CloudDrizzle, CloudFog } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+
+interface WeatherData {
+  temperature: number;
+  condition: string;
+  icon: string;
+  humidity: number;
+  wind: number;
+  feelsLike: number;
+  marine: { waveHeight: number; wavePeriod: number } | null;
+}
+
+const fetchWeather = async (): Promise<WeatherData> => {
+  const { data, error } = await supabase.functions.invoke("weather");
+  if (error) throw error;
+  if (data?.error) throw new Error(data.error);
+  return data;
+};
+
+const iconMap: Record<string, React.ElementType> = {
+  sun: Sun,
+  cloud: Cloud,
+  "cloud-sun": Cloud,
+  "cloud-rain": CloudRain,
+  "cloud-drizzle": CloudDrizzle,
+  "cloud-lightning": CloudLightning,
+  "cloud-fog": CloudFog,
+};
 
 const WeatherWidget = () => {
-  // Mock data - em produção seria via API
-  const weatherData = {
+  const { data: weather, isLoading, error } = useQuery({
+    queryKey: ["weather-fortim"],
+    queryFn: fetchWeather,
+    staleTime: 1000 * 60 * 15, // 15 min cache
+    retry: 1,
+  });
+
+  // Fallback mock data
+  const weatherData = weather || {
     temperature: 31,
     condition: "Ensolarado",
+    icon: "sun",
     humidity: 65,
     wind: 18,
     feelsLike: 33,
@@ -18,6 +55,9 @@ const WeatherWidget = () => {
     { time: "23:47", height: "2.2m", type: "Alta" },
   ];
 
+  const WeatherIcon = iconMap[weatherData.icon] || Sun;
+  const isLive = !!weather && !error;
+
   return (
     <section className="px-6 py-8">
       <div className="max-w-lg mx-auto">
@@ -28,6 +68,12 @@ const WeatherWidget = () => {
           className="font-serif text-2xl font-semibold text-foreground mb-4 text-center"
         >
           Clima em Fortim - Hoje
+          {isLive && (
+            <span className="ml-2 inline-flex items-center gap-1 text-xs font-normal text-green-600">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              ao vivo
+            </span>
+          )}
         </motion.h2>
 
         {/* Weather Card */}
@@ -40,7 +86,7 @@ const WeatherWidget = () => {
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-full ocean-gradient flex items-center justify-center">
-                <Sun className="w-8 h-8 text-white" />
+                <WeatherIcon className="w-8 h-8 text-white" />
               </div>
               <div>
                 <p className="text-4xl font-bold text-foreground">
@@ -110,7 +156,7 @@ const WeatherWidget = () => {
           </div>
           
           <p className="text-xs text-muted-foreground text-center mt-4">
-            Dados aproximados • Atualizado em tempo real
+            Dados aproximados da tábua de marés
           </p>
         </motion.div>
       </div>
