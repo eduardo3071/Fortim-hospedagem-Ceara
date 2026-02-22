@@ -16,7 +16,10 @@ const LeadCapture = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!name.trim() || !phone.trim()) {
+    const trimmedName = name.trim();
+    const trimmedPhone = phone.trim();
+
+    if (!trimmedName || !trimmedPhone) {
       toast({
         title: "Preencha todos os campos",
         description: "Nome e WhatsApp são obrigatórios.",
@@ -25,10 +28,29 @@ const LeadCapture = () => {
       return;
     }
 
+    if (trimmedName.length < 2 || trimmedName.length > 100) {
+      toast({
+        title: "Nome inválido",
+        description: "O nome deve ter entre 2 e 100 caracteres.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+    if (!phoneRegex.test(trimmedPhone) || trimmedPhone.length < 8 || trimmedPhone.length > 30) {
+      toast({
+        title: "WhatsApp inválido",
+        description: "Insira um número válido com DDD (apenas números, espaços e hífens).",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLoading(true);
     const { error } = await supabase
       .from("leads")
-      .insert({ name: name.trim(), phone: phone.trim() });
+      .insert({ name: trimmedName, phone: trimmedPhone });
 
     setIsLoading(false);
 

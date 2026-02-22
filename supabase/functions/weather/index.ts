@@ -10,12 +10,23 @@ const corsHeaders = {
 const LAT = -4.47;
 const LON = -37.71;
 
+// Simple in-memory cache (5 min TTL)
+let cachedResponse: { data: string; timestamp: number } | null = null;
+const CACHE_TTL = 5 * 60 * 1000;
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    // Return cached response if fresh
+    if (cachedResponse && Date.now() - cachedResponse.timestamp < CACHE_TTL) {
+      return new Response(cachedResponse.data, {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     // Fetch current weather + daily forecast from Open-Meteo
     const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,weather_code&forecast_days=6&timezone=America/Fortaleza`;
 
@@ -92,7 +103,10 @@ serve(async (req) => {
       forecast,
     };
 
-    return new Response(JSON.stringify(result), {
+    const responseBody = JSON.stringify(result);
+    cachedResponse = { data: responseBody, timestamp: Date.now() };
+
+    return new Response(responseBody, {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {
