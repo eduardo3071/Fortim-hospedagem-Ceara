@@ -2,19 +2,20 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Gift, CheckCircle } from "lucide-react";
+import { Gift, CheckCircle, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const LeadCapture = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validação simples
     if (!name.trim() || !phone.trim()) {
       toast({
         title: "Preencha todos os campos",
@@ -24,7 +25,22 @@ const LeadCapture = () => {
       return;
     }
 
-    // Aqui integraria com o backend/CRM
+    setIsLoading(true);
+    const { error } = await supabase
+      .from("leads")
+      .insert({ name: name.trim(), phone: phone.trim() });
+
+    setIsLoading(false);
+
+    if (error) {
+      toast({
+        title: "Erro ao cadastrar",
+        description: "Tente novamente mais tarde.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitted(true);
     toast({
       title: "Cadastro realizado! 🎉",
@@ -74,8 +90,9 @@ const LeadCapture = () => {
                     onChange={(e) => setPhone(e.target.value)}
                     className="bg-white/20 border-white/30 text-white placeholder:text-white/60 focus:border-white"
                   />
-                  <Button type="submit" variant="hero" size="lg" className="w-full">
-                    Quero Meu Desconto
+                  <Button type="submit" variant="hero" size="lg" className="w-full" disabled={isLoading}>
+                    {isLoading ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : null}
+                    {isLoading ? "Enviando..." : "Quero Meu Desconto"}
                   </Button>
                 </form>
 
