@@ -16,11 +16,11 @@ serve(async (req) => {
   }
 
   try {
-    // Fetch current weather from Open-Meteo (free, no API key)
-    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=America/Fortaleza`;
+    // Fetch current weather + daily forecast from Open-Meteo
+    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,weather_code&forecast_days=6&timezone=America/Fortaleza`;
 
-    // Fetch marine data (wave height as proxy for tide activity)
-    const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${LAT}&longitude=${LON}&daily=wave_height_max,wave_period_max&current=wave_height,wave_period&timezone=America/Fortaleza`;
+    // Fetch marine data
+    const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${LAT}&longitude=${LON}&current=wave_height,wave_period&timezone=America/Fortaleza`;
 
     const [weatherRes, marineRes] = await Promise.all([
       fetch(weatherUrl),
@@ -35,6 +35,7 @@ serve(async (req) => {
     const marineData = marineRes?.ok ? await marineRes.json() : null;
 
     const current = weatherData.current;
+    const daily = weatherData.daily;
 
     // Map WMO weather codes to Portuguese descriptions and icons
     const weatherCodeMap: Record<number, { condition: string; icon: string }> = {
@@ -61,6 +62,20 @@ serve(async (req) => {
       icon: "sun",
     };
 
+    // Build forecast array (skip today = index 0, take next 5 days)
+    const forecast = [];
+    for (let i = 1; i < Math.min(daily.time.length, 6); i++) {
+      const code = daily.weather_code[i];
+      const info = weatherCodeMap[code] || { condition: "Ensolarado", icon: "sun" };
+      forecast.push({
+        date: daily.time[i],
+        tempMax: Math.round(daily.temperature_2m_max[i]),
+        tempMin: Math.round(daily.temperature_2m_min[i]),
+        condition: info.condition,
+        icon: info.icon,
+      });
+    }
+
     const result = {
       temperature: Math.round(current.temperature_2m),
       condition: weatherInfo.condition,
@@ -74,6 +89,7 @@ serve(async (req) => {
             wavePeriod: marineData.current.wave_period,
           }
         : null,
+      forecast,
     };
 
     return new Response(JSON.stringify(result), {
