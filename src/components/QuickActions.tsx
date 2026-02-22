@@ -24,7 +24,7 @@ const WHATSAPP_MSG = encodeURIComponent(
   "Olá! Vim pelo site do Pontal Sereias e gostaria de verificar disponibilidade."
 );
 const MAPS_URL =
-  "https://www.google.com/maps/search/?api=1&query=-4.2214,-37.3486";
+  "https://www.google.com/maps/search/?api=1&query=Rua+Córrego+do+Maceió+456,+Barra,+Fortim-CE,+62815-000";
 
 const QuickActions = () => {
   const isMobile = useIsMobile();
