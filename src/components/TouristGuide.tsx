@@ -72,10 +72,7 @@ const guideData: Record<Category, Place[]> = {
       description: "Águas calmas e clima reservado", 
       distance: "5 km", 
       rating: 4.3,
-      images: [
-        { url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800", caption: "Praia tranquila de Fortim" },
-        { url: "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800", caption: "Águas calmas e coqueiros" },
-      ]
+      images: []
     },
     { 
       name: "Canoa Quebrada", 
@@ -96,60 +93,42 @@ const guideData: Record<Category, Place[]> = {
       description: "Mais tranquila que Canoa, muito autêntica", 
       distance: "~35 km", 
       rating: 4.4,
-      images: [
-        { url: "https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=800", caption: "Jangadas coloridas na areia" },
-        { url: "https://images.unsplash.com/photo-1471922694854-ff1b63b20054?w=800", caption: "Vista da praia de Majorlândia" },
-      ]
+      images: []
     },
     { 
       name: "Praia das Fontes", 
       description: "Falésias, fontes naturais e passeios de buggy", 
       distance: "~75 km", 
       rating: 4.6,
-      images: [
-        { url: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800", caption: "Falésias e fontes naturais" },
-        { url: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?w=800", caption: "Praia das Fontes ao entardecer" },
-      ]
+      images: []
     },
     { 
       name: "Morro Branco", 
       description: "Labirinto de falésias e areia colorida", 
       distance: "~85 km", 
       rating: 4.7,
-      images: [
-        { url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800", caption: "Falésias coloridas de Morro Branco" },
-        { url: "https://images.unsplash.com/photo-1473116763249-2faaef81ccda?w=800", caption: "Labirinto de falésias" },
-      ]
+      images: []
     },
     { 
       name: "Praia do Uruaú", 
       description: "Lagoas e kitesurf", 
       distance: "~95 km", 
       rating: 4.3,
-      images: [
-        { url: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800", caption: "Lagoa do Uruaú" },
-        { url: "https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?w=800", caption: "Kitesurf na praia" },
-      ]
+      images: []
     },
     { 
       name: "Prainha", 
       description: "Clássica e próxima de Fortaleza", 
       distance: "~120 km", 
       rating: 4.2,
-      images: [
-        { url: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=800", caption: "Prainha de Aquiraz" },
-        { url: "https://images.unsplash.com/photo-1468413253725-0d5181091126?w=800", caption: "Barracas à beira-mar" },
-      ]
+      images: []
     },
     { 
       name: "Praia do Futuro", 
       description: "Melhor infraestrutura de barracas do Ceará", 
       distance: "~135 km", 
       rating: 4.5,
-      images: [
-        { url: "https://images.unsplash.com/photo-1520942702018-0862200e6873?w=800", caption: "Barracas na Praia do Futuro" },
-        { url: "https://images.unsplash.com/photo-1476673160081-cf065607f449?w=800", caption: "Infraestrutura à beira-mar" },
-      ]
+      images: []
     },
     { 
       name: "Cumbuco", 
@@ -169,41 +148,28 @@ const guideData: Record<Category, Place[]> = {
       description: "Visual cinematográfico com dunas e coqueiros", 
       distance: "~210 km", 
       rating: 4.8,
-      images: [
-        { url: "https://images.unsplash.com/photo-1509233725247-49e657c54213?w=800", caption: "Dunas e coqueiros de Lagoinha" },
-        { url: "https://images.unsplash.com/photo-1484821582734-6c6c9a0e3e13?w=800", caption: "Paisagem cinematográfica" },
-      ]
+      images: []
     },
     { 
       name: "Flecheiras", 
       description: "Piscinas naturais e clima sofisticado", 
       distance: "~240 km", 
       rating: 4.5,
-      images: [
-        { url: "https://images.unsplash.com/photo-1437719417032-8799f6cbf1b7?w=800", caption: "Piscinas naturais de Flecheiras" },
-        { url: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=800", caption: "Praia tranquila e sofisticada" },
-      ]
+      images: []
     },
     { 
       name: "Icaraizinho de Amontada", 
       description: "Destino boutique, muito procurado por europeus", 
       distance: "~300 km", 
       rating: 4.6,
-      images: [
-        { url: "https://images.unsplash.com/photo-1498536806737-46e5c3d3cfa3?w=800", caption: "Praia deserta de Icaraizinho" },
-        { url: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800", caption: "Vila boutique à beira-mar" },
-      ]
+      images: []
     },
     { 
       name: "Jericoacoara", 
       description: "Uma das praias mais famosas do mundo, dunas e lagoas cristalinas", 
       distance: "~400 km", 
       rating: 5,
-      images: [
-        { url: "https://images.unsplash.com/photo-1502933691298-84fc14542831?w=800", caption: "Dunas de Jericoacoara" },
-        { url: "https://images.unsplash.com/photo-1495954222046-2c427ecb546d?w=800", caption: "Pôr do sol na Duna do Pôr do Sol" },
-        { url: "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=800", caption: "Lagoa do Paraíso" },
-      ]
+      images: []
     },
   ],
   restaurantes: [
