@@ -20,13 +20,13 @@ const Footer = () => {
 
           {/* Social */}
           <a
-            href="https://instagram.com/pontal.sereias"
+            href="https://instagram.com/pontalsereias"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition-colors mb-6"
           >
             <Instagram className="w-5 h-5" />
-            <span className="text-sm font-medium">@pontal.sereias</span>
+            <span className="text-sm font-medium">@pontalsereias</span>
           </a>
 
           {/* Divider */}
