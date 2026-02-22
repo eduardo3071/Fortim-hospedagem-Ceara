@@ -17,18 +17,21 @@ interface InstagramPost {
 const fetchInstagramFeed = async (): Promise<InstagramPost[]> => {
   const { data, error } = await supabase.functions.invoke("instagram-feed");
   if (error) throw error;
-  return data?.data || [];
+  if (data?.error) throw new Error(data.error);
+  const posts = data?.data || [];
+  if (posts.length === 0) throw new Error("No posts");
+  return posts;
 };
 
 const InstagramFeed = () => {
   const { data: posts, isLoading, error } = useQuery({
     queryKey: ["instagram-feed"],
     queryFn: fetchInstagramFeed,
-    staleTime: 1000 * 60 * 10, // 10 min cache
-    retry: 2,
+    staleTime: 1000 * 60 * 10,
+    retry: 1,
   });
 
-  if (error) return null; // fail silently
+  if (error || (isLoading && !posts)) return null;
 
   return (
     <section className="px-6 py-10 bg-background">
