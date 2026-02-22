@@ -22,6 +22,10 @@ import cumbuco2 from "@/assets/cumbuco-2.png";
 import cumbuco3 from "@/assets/cumbuco-3.png";
 import cumbuco4 from "@/assets/cumbuco-4.png";
 import cumbuco5 from "@/assets/cumbuco-5.png";
+import majorlandia1 from "@/assets/majorlandia-1.png";
+import majorlandia2 from "@/assets/majorlandia-2.png";
+import majorlandia3 from "@/assets/majorlandia-3.png";
+import majorlandia4 from "@/assets/majorlandia-4.png";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
@@ -86,7 +90,12 @@ const guideData: Record<Category, Place[]> = {
       description: "Mais tranquila que Canoa, muito autêntica", 
       distance: "~35 km", 
       rating: 4.4,
-      images: []
+      images: [
+        { url: majorlandia1, caption: "Jangada na areia" },
+        { url: majorlandia2, caption: "Jangadas com velas ao vento" },
+        { url: majorlandia3, caption: "Esculturas de areia e barracas" },
+        { url: majorlandia4, caption: "Barracas coloridas à beira-mar" },
+      ]
     },
     { 
       name: "Praia das Fontes", 
