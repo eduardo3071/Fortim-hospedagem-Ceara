@@ -37,6 +37,11 @@ import morroBranco2 from "@/assets/morro-branco-2.png";
 import morroBranco3 from "@/assets/morro-branco-3.png";
 import morroBranco4 from "@/assets/morro-branco-4.png";
 import morroBranco5 from "@/assets/morro-branco-5.png";
+import uruau1 from "@/assets/uruau-1.png";
+import uruau2 from "@/assets/uruau-2.png";
+import uruau3 from "@/assets/uruau-3.png";
+import uruau4 from "@/assets/uruau-4.png";
+import uruau5 from "@/assets/uruau-5.png";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
@@ -140,7 +145,13 @@ const guideData: Record<Category, Place[]> = {
       description: "Lagoas e kitesurf", 
       distance: "~95 km", 
       rating: 4.3,
-      images: []
+      images: [
+        { url: uruau1, caption: "Vegetação e coqueiros à beira-mar" },
+        { url: uruau2, caption: "Falésias de areia colorida" },
+        { url: uruau3, caption: "Entardecer na praia" },
+        { url: uruau4, caption: "Jangadas com velas ao vento" },
+        { url: uruau5, caption: "Jangadas coloridas na areia" },
+      ]
     },
     { 
       name: "Prainha", 
