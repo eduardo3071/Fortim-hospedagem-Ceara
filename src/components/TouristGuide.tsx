@@ -68,13 +68,6 @@ const guideData: Record<Category, Place[]> = {
       ]
     },
     { 
-      name: "Praia de Fortim", 
-      description: "Águas calmas e clima reservado", 
-      distance: "5 km", 
-      rating: 4.3,
-      images: []
-    },
-    { 
       name: "Canoa Quebrada", 
       description: "Falésias coloridas e vida noturna famosa", 
       distance: "~30 km", 
