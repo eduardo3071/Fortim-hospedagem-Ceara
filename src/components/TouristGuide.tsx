@@ -32,6 +32,11 @@ import praiaFontes3 from "@/assets/praia-fontes-3.png";
 import praiaFontes4 from "@/assets/praia-fontes-4.png";
 import praiaFontes5 from "@/assets/praia-fontes-5.png";
 import praiaFontes6 from "@/assets/praia-fontes-6.png";
+import morroBranco1 from "@/assets/morro-branco-1.png";
+import morroBranco2 from "@/assets/morro-branco-2.png";
+import morroBranco3 from "@/assets/morro-branco-3.png";
+import morroBranco4 from "@/assets/morro-branco-4.png";
+import morroBranco5 from "@/assets/morro-branco-5.png";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
@@ -122,10 +127,16 @@ const guideData: Record<Category, Place[]> = {
       description: "Labirinto de falésias e areia colorida", 
       distance: "~85 km", 
       rating: 4.7,
-      images: []
+      images: [
+        { url: morroBranco1, caption: "Falésias alaranjadas e mar" },
+        { url: morroBranco2, caption: "Jangada colorida na praia" },
+        { url: morroBranco3, caption: "Barracas e guarda-sóis" },
+        { url: morroBranco4, caption: "Vista panorâmica da orla" },
+        { url: morroBranco5, caption: "Buggies nas falésias" },
+      ]
     },
     { 
-      name: "Praia do Uruaú", 
+      name: "Praia do Uruaú",
       description: "Lagoas e kitesurf", 
       distance: "~95 km", 
       rating: 4.3,
