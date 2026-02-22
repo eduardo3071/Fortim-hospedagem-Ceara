@@ -31,6 +31,7 @@ const QuickActions = () => {
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [phoneOpen, setPhoneOpen] = useState(false);
   const [selectedDates, setSelectedDates] = useState<Date[] | undefined>();
+  const [calendarMonth, setCalendarMonth] = useState<Date>(new Date());
   const [copied, setCopied] = useState(false);
 
   const formatPhone = (num: string) =>
@@ -109,6 +110,8 @@ const QuickActions = () => {
         mode="multiple"
         selected={selectedDates}
         onSelect={setSelectedDates}
+        month={calendarMonth}
+        onMonthChange={setCalendarMonth}
         className="rounded-xl border shadow-sm"
       />
       <Button
