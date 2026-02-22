@@ -42,6 +42,11 @@ import uruau2 from "@/assets/uruau-2.png";
 import uruau3 from "@/assets/uruau-3.png";
 import uruau4 from "@/assets/uruau-4.png";
 import uruau5 from "@/assets/uruau-5.png";
+import prainha1 from "@/assets/prainha-1.png";
+import prainha2 from "@/assets/prainha-2.png";
+import prainha3 from "@/assets/prainha-3.png";
+import prainha4 from "@/assets/prainha-4.png";
+import prainha5 from "@/assets/prainha-5.png";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
@@ -158,7 +163,13 @@ const guideData: Record<Category, Place[]> = {
       description: "Clássica e próxima de Fortaleza", 
       distance: "~120 km", 
       rating: 4.2,
-      images: []
+      images: [
+        { url: prainha1, caption: "Vista panorâmica com barracas e coqueiros" },
+        { url: prainha2, caption: "Jangadas de pescadores na areia" },
+        { url: prainha3, caption: "Cadeiras e espreguiçadeiras à beira-mar" },
+        { url: prainha4, caption: "Quiosques de palha e mar azul" },
+        { url: prainha5, caption: "Barracas e guarda-sóis coloridos" },
+      ]
     },
     { 
       name: "Praia do Futuro", 
