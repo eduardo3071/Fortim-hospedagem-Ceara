@@ -26,6 +26,12 @@ import majorlandia1 from "@/assets/majorlandia-1.png";
 import majorlandia2 from "@/assets/majorlandia-2.png";
 import majorlandia3 from "@/assets/majorlandia-3.png";
 import majorlandia4 from "@/assets/majorlandia-4.png";
+import praiaFontes1 from "@/assets/praia-fontes-1.png";
+import praiaFontes2 from "@/assets/praia-fontes-2.png";
+import praiaFontes3 from "@/assets/praia-fontes-3.png";
+import praiaFontes4 from "@/assets/praia-fontes-4.png";
+import praiaFontes5 from "@/assets/praia-fontes-5.png";
+import praiaFontes6 from "@/assets/praia-fontes-6.png";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
@@ -102,7 +108,14 @@ const guideData: Record<Category, Place[]> = {
       description: "Falésias, fontes naturais e passeios de buggy", 
       distance: "~75 km", 
       rating: 4.6,
-      images: []
+      images: [
+        { url: praiaFontes1, caption: "Falésias coloridas e céu azul" },
+        { url: praiaFontes2, caption: "Jangadas na praia" },
+        { url: praiaFontes3, caption: "Gruta e piscinas naturais" },
+        { url: praiaFontes4, caption: "Falésias vermelhas e mar" },
+        { url: praiaFontes5, caption: "Dunas e falésias" },
+        { url: praiaFontes6, caption: "Pôr do sol na praia" },
+      ]
     },
     { 
       name: "Morro Branco", 
