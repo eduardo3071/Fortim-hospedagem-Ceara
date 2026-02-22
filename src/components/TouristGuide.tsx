@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Utensils, Waves, ChevronRight, Camera } from "lucide-react";
+import { MapPin, Utensils, Waves, ChevronRight, Camera, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import PlaceGallery from "./PlaceGallery";
 import pontalMaceio1 from "@/assets/pontal-maceio-1.png";
@@ -38,12 +38,14 @@ interface Place {
   images: PlaceImage[];
 }
 
+const INITIAL_ITEMS = 4;
+
 const guideData: Record<Category, Place[]> = {
   praias: [
     { 
       name: "Praia de Pontal de Maceió", 
-      description: "A mais bela do Ceará, com dunas e coqueirais", 
-      distance: "3,9 km", 
+      description: "Principal praia da região, tranquila e charmosa", 
+      distance: "0 km", 
       rating: 5,
       images: [
         { url: pontalMaceio1, caption: "Vista panorâmica com coqueiros" },
@@ -54,9 +56,28 @@ const guideData: Record<Category, Place[]> = {
       ]
     },
     { 
-      name: "Praia de Canoa Quebrada", 
-      description: "Famosa pelas falésias coloridas", 
-      distance: "32,7 km", 
+      name: "Praia Canto da Barra", 
+      description: "Encontro do rio Jaguaribe com o mar, perfeito para pôr do sol", 
+      distance: "3 km", 
+      rating: 4.5,
+      images: [
+        { url: cantoBarra1, caption: "Barraca à beira-mar" },
+        { url: cantoBarra2, caption: "Orla com barco azul" },
+        { url: cantoBarra3, caption: "Vista do mar e dunas" },
+        { url: cantoBarra4, caption: "Barcos ancorados" },
+      ]
+    },
+    { 
+      name: "Praia de Fortim", 
+      description: "Águas calmas e clima reservado", 
+      distance: "5 km", 
+      rating: 4.3,
+      images: []
+    },
+    { 
+      name: "Canoa Quebrada", 
+      description: "Falésias coloridas e vida noturna famosa", 
+      distance: "~30 km", 
       rating: 4.8,
       images: [
         { url: canoaQuebrada1, caption: "Vista panorâmica com parapente" },
@@ -68,21 +89,51 @@ const guideData: Record<Category, Place[]> = {
       ]
     },
     { 
-      name: "Praia Canto da Barra", 
-      description: "Ótima para Kitesurf, Passeios de Barco, Caminhadas e Contemplação", 
-      distance: "2,5 km", 
-      rating: 4.5,
-      images: [
-        { url: cantoBarra1, caption: "Barraca à beira-mar" },
-        { url: cantoBarra2, caption: "Orla com barco azul" },
-        { url: cantoBarra3, caption: "Vista do mar e dunas" },
-        { url: cantoBarra4, caption: "Barcos ancorados" },
-      ]
+      name: "Majorlândia", 
+      description: "Mais tranquila que Canoa, muito autêntica", 
+      distance: "~35 km", 
+      rating: 4.4,
+      images: []
     },
     { 
-      name: "Praia de Cumbuco", 
-      description: "Paraíso do kitesurf", 
-      distance: "172 km", 
+      name: "Praia das Fontes", 
+      description: "Falésias, fontes naturais e passeios de buggy", 
+      distance: "~75 km", 
+      rating: 4.6,
+      images: []
+    },
+    { 
+      name: "Morro Branco", 
+      description: "Labirinto de falésias e areia colorida", 
+      distance: "~85 km", 
+      rating: 4.7,
+      images: []
+    },
+    { 
+      name: "Praia do Uruaú", 
+      description: "Lagoas e kitesurf", 
+      distance: "~95 km", 
+      rating: 4.3,
+      images: []
+    },
+    { 
+      name: "Prainha", 
+      description: "Clássica e próxima de Fortaleza", 
+      distance: "~120 km", 
+      rating: 4.2,
+      images: []
+    },
+    { 
+      name: "Praia do Futuro", 
+      description: "Melhor infraestrutura de barracas do Ceará", 
+      distance: "~135 km", 
+      rating: 4.5,
+      images: []
+    },
+    { 
+      name: "Cumbuco", 
+      description: "Um dos maiores destinos de kitesurf do Brasil", 
+      distance: "~165 km", 
       rating: 4.7,
       images: [
         { url: cumbuco1, caption: "Passeio a cavalo na praia" },
@@ -91,6 +142,34 @@ const guideData: Record<Category, Place[]> = {
         { url: cumbuco4, caption: "Arco-íris na praia" },
         { url: cumbuco5, caption: "Letreiro Eu ❤️ Cumbuco" },
       ]
+    },
+    { 
+      name: "Lagoinha", 
+      description: "Visual cinematográfico com dunas e coqueiros", 
+      distance: "~210 km", 
+      rating: 4.8,
+      images: []
+    },
+    { 
+      name: "Flecheiras", 
+      description: "Piscinas naturais e clima sofisticado", 
+      distance: "~240 km", 
+      rating: 4.5,
+      images: []
+    },
+    { 
+      name: "Icaraizinho de Amontada", 
+      description: "Destino boutique, muito procurado por europeus", 
+      distance: "~300 km", 
+      rating: 4.6,
+      images: []
+    },
+    { 
+      name: "Jericoacoara", 
+      description: "Uma das praias mais famosas do mundo, dunas e lagoas cristalinas", 
+      distance: "~400 km", 
+      rating: 5,
+      images: []
     },
   ],
   restaurantes: [
@@ -131,6 +210,20 @@ const guideData: Record<Category, Place[]> = {
       images: [
         { url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800", caption: "Caranguejo ao molho" },
       ]
+    },
+    { 
+      name: "Peixada do Meio", 
+      description: "Peixe fresco com tempero caseiro e ambiente familiar", 
+      distance: "3km", 
+      rating: 4.5,
+      images: []
+    },
+    { 
+      name: "Bar do Pescador", 
+      description: "Petiscos e cerveja gelada com pé na areia", 
+      distance: "1km", 
+      rating: 4.4,
+      images: []
     },
   ],
   passeios: [
@@ -174,6 +267,20 @@ const guideData: Record<Category, Place[]> = {
         { url: "https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=800", caption: "Momento perfeito" },
       ]
     },
+    { 
+      name: "Passeio de Jangada", 
+      description: "Experiência autêntica com pescadores locais", 
+      distance: "Saída local", 
+      rating: 4.8,
+      images: []
+    },
+    { 
+      name: "Trilha do Mangue", 
+      description: "Caminhada ecológica pelo manguezal", 
+      distance: "5km", 
+      rating: 4.5,
+      images: []
+    },
   ],
 };
 
@@ -187,6 +294,11 @@ const TouristGuide = () => {
   const [activeCategory, setActiveCategory] = useState<Category>("praias");
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [expandedCategories, setExpandedCategories] = useState<Record<Category, boolean>>({
+    praias: false,
+    restaurantes: false,
+    passeios: false,
+  });
 
   const handlePlaceClick = (place: Place) => {
     setSelectedPlace(place);
@@ -197,6 +309,18 @@ const TouristGuide = () => {
     setIsGalleryOpen(false);
     setTimeout(() => setSelectedPlace(null), 300);
   };
+
+  const toggleExpand = () => {
+    setExpandedCategories((prev) => ({
+      ...prev,
+      [activeCategory]: !prev[activeCategory],
+    }));
+  };
+
+  const isExpanded = expandedCategories[activeCategory];
+  const allPlaces = guideData[activeCategory];
+  const visiblePlaces = isExpanded ? allPlaces : allPlaces.slice(0, INITIAL_ITEMS);
+  const hasMore = allPlaces.length > INITIAL_ITEMS;
 
   return (
     <section className="px-6 py-10 bg-sand-light/50">
@@ -249,7 +373,7 @@ const TouristGuide = () => {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="space-y-3"
           >
-            {guideData[activeCategory].map((place, index) => (
+            {visiblePlaces.map((place, index) => (
               <motion.div
                 key={place.name}
                 initial={{ opacity: 0, y: 10 }}
@@ -294,6 +418,20 @@ const TouristGuide = () => {
                 <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-ocean-medium group-hover:translate-x-1 transition-all" />
               </motion.div>
             ))}
+
+            {/* Show more / Show less button */}
+            {hasMore && (
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                onClick={toggleExpand}
+                className="w-full py-3 rounded-xl bg-white/80 backdrop-blur-sm border border-ocean-light/30 text-ocean-medium font-medium text-sm flex items-center justify-center gap-2 hover:bg-ocean-light/20 transition-all duration-300 active:scale-[0.98]"
+              >
+                <span>{isExpanded ? "Mostrar menos" : `Mostrar mais (${allPlaces.length - INITIAL_ITEMS})`}</span>
+                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
+              </motion.button>
+            )}
           </motion.div>
         </AnimatePresence>
 
