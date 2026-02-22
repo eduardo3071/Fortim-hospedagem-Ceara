@@ -47,6 +47,10 @@ import prainha2 from "@/assets/prainha-2.png";
 import prainha3 from "@/assets/prainha-3.png";
 import prainha4 from "@/assets/prainha-4.png";
 import prainha5 from "@/assets/prainha-5.png";
+import praiaFuturo1 from "@/assets/praia-futuro-1.png";
+import praiaFuturo2 from "@/assets/praia-futuro-2.png";
+import praiaFuturo3 from "@/assets/praia-futuro-3.png";
+import praiaFuturo4 from "@/assets/praia-futuro-4.png";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
@@ -176,7 +180,12 @@ const guideData: Record<Category, Place[]> = {
       description: "Melhor infraestrutura de barracas do Ceará", 
       distance: "~135 km", 
       rating: 4.5,
-      images: []
+      images: [
+        { url: praiaFuturo1, caption: "Vista aérea das barracas e orla" },
+        { url: praiaFuturo2, caption: "Barracas de palha à beira-mar" },
+        { url: praiaFuturo3, caption: "Banhistas na praia" },
+        { url: praiaFuturo4, caption: "Mesas e guarda-sóis na areia" },
+      ]
     },
     { 
       name: "Cumbuco", 
