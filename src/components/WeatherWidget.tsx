@@ -116,49 +116,6 @@ const WeatherWidget = () => {
           </div>
         </motion.div>
 
-        {/* Tide Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="glass-card rounded-2xl p-6"
-        >
-          <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-            <span className="text-2xl">🌊</span>
-            Tábua de Marés - Hoje
-          </h3>
-          
-          <div className="space-y-3">
-            {tideData.map((tide, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className={`flex items-center justify-between p-3 rounded-xl ${
-                  tide.type === "Alta" 
-                    ? "bg-ocean-light/40 border-l-4 border-ocean-medium" 
-                    : "bg-sand-light border-l-4 border-sand-warm"
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <span className="text-lg">{tide.type === "Alta" ? "⬆️" : "⬇️"}</span>
-                  <span className="font-medium text-foreground">{tide.type}</span>
-                </div>
-                <div className="text-right">
-                  <span className="block font-semibold text-foreground">{tide.time}</span>
-                  <span className="text-sm text-muted-foreground">{tide.height}</span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-          
-          <p className="text-xs text-muted-foreground text-center mt-4">
-            Dados aproximados da tábua de marés
-          </p>
-        </motion.div>
       </div>
     </section>
   );
