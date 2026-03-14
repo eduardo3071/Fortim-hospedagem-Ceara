@@ -62,7 +62,7 @@ const QuickActions = () => {
       return;
     }
 
-    const nights = calculateNights(selectedDates);
+    const nights = calculateDays(selectedDates);
     if (nights < 1) {
       toast({
         title: "Período inválido",
