@@ -276,7 +276,7 @@ const QuickActions = () => {
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>Selecione suas datas</DrawerTitle>
-              <DrawerDescription>Escolha check-in e check-out • R${PRICE_PER_NIGHT}/noite</DrawerDescription>
+              <DrawerDescription>Escolha check-in e check-out • R${PRICE_PER_NIGHT}/diária</DrawerDescription>
             </DrawerHeader>
             <CalendarContent />
           </DrawerContent>
