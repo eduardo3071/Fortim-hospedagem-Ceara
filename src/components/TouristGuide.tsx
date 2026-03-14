@@ -53,6 +53,8 @@ import praiaFuturo3 from "@/assets/praia-futuro-3.png";
 import praiaFuturo4 from "@/assets/praia-futuro-4.png";
 import buggy1 from "@/assets/buggy-1.png";
 import buggy2 from "@/assets/buggy-2.webp";
+import kitesurf1 from "@/assets/kitesurf-1.png";
+import kitesurf2 from "@/assets/kitesurf-2.png";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
@@ -274,7 +276,8 @@ const guideData: Record<Category, Place[]> = {
       distance: "1km", 
       rating: 4.9,
       images: [
-        { url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800", caption: "Aulas para iniciantes" },
+        { url: kitesurf1, caption: "Kitesurf no mar cristalino" },
+        { url: kitesurf2, caption: "Manobra radical no kitesurf" },
       ]
     },
     { 
