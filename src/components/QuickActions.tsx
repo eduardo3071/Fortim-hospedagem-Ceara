@@ -48,13 +48,8 @@ const QuickActions = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const calculateNights = (dates: Date[]) => {
-    if (dates.length < 2) return 0;
-    const sorted = [...dates].sort((a, b) => a.getTime() - b.getTime());
-    const first = sorted[0];
-    const last = sorted[sorted.length - 1];
-    const diffTime = last.getTime() - first.getTime();
-    return Math.round(diffTime / (1000 * 60 * 60 * 24));
+  const calculateDays = (dates: Date[]) => {
+    return dates.length;
   };
 
   const handlePayment = async () => {
