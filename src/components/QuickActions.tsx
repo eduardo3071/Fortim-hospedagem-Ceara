@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/drawer";
 import { Calendar as CalendarUI } from "@/components/ui/calendar";
 
-const PHONE_NUMBER = "4915754439503";
+const PHONE_NUMBER = "5511930782906";
 const WHATSAPP_MSG = encodeURIComponent(
   "Olá! Vim pelo site do Pontal Sereias e gostaria de verificar disponibilidade."
 );
