@@ -288,8 +288,8 @@ const guideData: Record<Category, Place[]> = {
       distance: "3km", 
       rating: 4.7,
       images: [
-        { url: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800", caption: "Navegando pelo litoral" },
-        { url: "https://images.unsplash.com/photo-1500259571355-332da5cb07aa?w=800", caption: "Parada em praias desertas" },
+        { url: lancha1, caption: "Passeio de lancha com turistas" },
+        { url: lancha2, caption: "Lancha em águas cristalinas" },
       ]
     },
     { 
