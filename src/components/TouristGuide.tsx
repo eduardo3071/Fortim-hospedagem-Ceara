@@ -55,6 +55,8 @@ import buggy1 from "@/assets/buggy-1.png";
 import buggy2 from "@/assets/buggy-2.webp";
 import kitesurf1 from "@/assets/kitesurf-1.png";
 import kitesurf2 from "@/assets/kitesurf-2.png";
+import lancha1 from "@/assets/lancha-1.png";
+import lancha2 from "@/assets/lancha-2.png";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
