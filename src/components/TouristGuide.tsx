@@ -61,6 +61,7 @@ import porDoSolDunas1 from "@/assets/por-do-sol-dunas-1.png";
 import porDoSolDunas2 from "@/assets/por-do-sol-dunas-2.png";
 import jangada1 from "@/assets/jangada-1.png";
 import jangada2 from "@/assets/jangada-2.png";
+import mangue1 from "@/assets/mangue-1.png";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
@@ -321,7 +322,9 @@ const guideData: Record<Category, Place[]> = {
       description: "Caminhada ecológica pelo manguezal", 
       distance: "5km", 
       rating: 4.5,
-      images: []
+      images: [
+        { url: mangue1, caption: "Manguezal de águas cristalinas" },
+      ]
     },
   ],
 };
