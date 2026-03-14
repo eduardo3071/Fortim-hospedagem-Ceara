@@ -59,6 +59,8 @@ import lancha1 from "@/assets/lancha-1.png";
 import lancha2 from "@/assets/lancha-2.png";
 import porDoSolDunas1 from "@/assets/por-do-sol-dunas-1.png";
 import porDoSolDunas2 from "@/assets/por-do-sol-dunas-2.png";
+import jangada1 from "@/assets/jangada-1.png";
+import jangada2 from "@/assets/jangada-2.png";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
@@ -309,7 +311,10 @@ const guideData: Record<Category, Place[]> = {
       description: "Experiência autêntica com pescadores locais", 
       distance: "Saída local", 
       rating: 4.8,
-      images: []
+      images: [
+        { url: jangada1, caption: "Jangadas coloridas na praia" },
+        { url: jangada2, caption: "Passeio de jangada no mar cristalino" },
+      ]
     },
     { 
       name: "Trilha do Mangue", 
