@@ -311,7 +311,10 @@ const guideData: Record<Category, Place[]> = {
       description: "Experiência autêntica com pescadores locais", 
       distance: "Saída local", 
       rating: 4.8,
-      images: []
+      images: [
+        { url: jangada1, caption: "Jangadas coloridas na praia" },
+        { url: jangada2, caption: "Passeio de jangada no mar cristalino" },
+      ]
     },
     { 
       name: "Trilha do Mangue", 
