@@ -53,6 +53,8 @@ import praiaFuturo3 from "@/assets/praia-futuro-3.png";
 import praiaFuturo4 from "@/assets/praia-futuro-4.png";
 import buggy1 from "@/assets/buggy-1.png";
 import buggy2 from "@/assets/buggy-2.webp";
+import kitesurf1 from "@/assets/kitesurf-1.png";
+import kitesurf2 from "@/assets/kitesurf-2.png";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
