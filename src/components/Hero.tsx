@@ -111,7 +111,7 @@ const Hero = () => {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-white/90 text-lg mb-4 font-light"
           >
-            Seu refúgio próximo ao mar em Fortim, Ceará
+            A 1,5 km da Praia de Pontal de Maceió — Fortim, Ceará
           </motion.p>
 
           {/* Location */}
