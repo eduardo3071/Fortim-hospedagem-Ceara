@@ -85,7 +85,7 @@ const guideData: Record<Category, Place[]> = {
     { 
       name: "Praia de Pontal de Maceió", 
       description: "Principal praia da região, tranquila e charmosa", 
-      distance: "0 km", 
+      distance: "1,5 km", 
       rating: 5,
       images: [
         { url: pontalMaceio1, caption: "Vista panorâmica com coqueiros" },
