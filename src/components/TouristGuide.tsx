@@ -322,7 +322,9 @@ const guideData: Record<Category, Place[]> = {
       description: "Caminhada ecológica pelo manguezal", 
       distance: "5km", 
       rating: 4.5,
-      images: []
+      images: [
+        { url: mangue1, caption: "Manguezal de águas cristalinas" },
+      ]
     },
   ],
 };
