@@ -51,6 +51,8 @@ import praiaFuturo1 from "@/assets/praia-futuro-1.png";
 import praiaFuturo2 from "@/assets/praia-futuro-2.png";
 import praiaFuturo3 from "@/assets/praia-futuro-3.png";
 import praiaFuturo4 from "@/assets/praia-futuro-4.png";
+import buggy1 from "@/assets/buggy-1.png";
+import buggy2 from "@/assets/buggy-2.webp";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
@@ -262,7 +264,8 @@ const guideData: Record<Category, Place[]> = {
       distance: "Saída local", 
       rating: 5,
       images: [
-        { url: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800", caption: "Aventura nas dunas" },
+        { url: buggy1, caption: "Buggies nas falésias" },
+        { url: buggy2, caption: "Comboio de buggies nas dunas" },
         { url: "https://images.unsplash.com/photo-1528728329032-2972f65dfb3f?w=800", caption: "Lagoas escondidas" },
         { url: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800", caption: "Vista de tirar o fôlego" },
       ]
