@@ -111,7 +111,7 @@ const Hero = () => {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-white/90 text-lg mb-4 font-light"
           >
-            Seu refúgio em Fortim, Ceará.
+            Casa Maanaim — seu paraíso em Fortim-CE
           </motion.p>
 
           {/* Location */}
