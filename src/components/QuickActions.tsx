@@ -183,7 +183,7 @@ const QuickActions = () => {
       {nights > 0 && (
         <div className="w-full rounded-xl bg-muted p-4 text-center space-y-1">
           <p className="text-sm text-muted-foreground">
-            {nights} noite{nights > 1 ? "s" : ""} × R${PRICE_PER_NIGHT}
+            {nights} diária{nights > 1 ? "s" : ""} × R${PRICE_PER_NIGHT}
           </p>
           <p className="text-2xl font-bold text-foreground">
             R${totalPrice.toLocaleString("pt-BR")}
