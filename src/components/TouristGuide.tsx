@@ -57,6 +57,8 @@ import kitesurf1 from "@/assets/kitesurf-1.png";
 import kitesurf2 from "@/assets/kitesurf-2.png";
 import lancha1 from "@/assets/lancha-1.png";
 import lancha2 from "@/assets/lancha-2.png";
+import porDoSolDunas1 from "@/assets/por-do-sol-dunas-1.png";
+import porDoSolDunas2 from "@/assets/por-do-sol-dunas-2.png";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
