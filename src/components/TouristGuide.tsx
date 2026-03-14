@@ -57,6 +57,8 @@ import kitesurf1 from "@/assets/kitesurf-1.png";
 import kitesurf2 from "@/assets/kitesurf-2.png";
 import lancha1 from "@/assets/lancha-1.png";
 import lancha2 from "@/assets/lancha-2.png";
+import porDoSolDunas1 from "@/assets/por-do-sol-dunas-1.png";
+import porDoSolDunas2 from "@/assets/por-do-sol-dunas-2.png";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
@@ -298,8 +300,8 @@ const guideData: Record<Category, Place[]> = {
       distance: "2km", 
       rating: 5,
       images: [
-        { url: "https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=800", caption: "Cores mágicas do entardecer" },
-        { url: "https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=800", caption: "Momento perfeito" },
+        { url: porDoSolDunas1, caption: "Pôr do sol dourado nas dunas" },
+        { url: porDoSolDunas2, caption: "Turistas contemplando o entardecer" },
       ]
     },
     { 
