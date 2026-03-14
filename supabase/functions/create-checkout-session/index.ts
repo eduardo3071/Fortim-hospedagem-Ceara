@@ -44,7 +44,7 @@ Deno.serve(async (req) => {
             currency: "brl",
             product_data: {
               name: "Reserva Pontal Sereias",
-              description: `Hospedagem em Fortim-CE — ${nights} noite${nights > 1 ? "s" : ""}${checkin && checkout ? ` (${checkin} a ${checkout})` : ""}`,
+              description: `Hospedagem em Fortim-CE — ${nights} diária${nights > 1 ? "s" : ""}${checkin && checkout ? ` (${checkin} a ${checkout})` : ""}`,
             },
             unit_amount: amount,
           },

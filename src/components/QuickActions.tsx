@@ -286,7 +286,7 @@ const QuickActions = () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Selecione suas datas</DialogTitle>
-              <DialogDescription>Escolha check-in e check-out • R${PRICE_PER_NIGHT}/noite</DialogDescription>
+              <DialogDescription>Escolha check-in e check-out • R${PRICE_PER_NIGHT}/diária</DialogDescription>
             </DialogHeader>
             <CalendarContent />
           </DialogContent>
