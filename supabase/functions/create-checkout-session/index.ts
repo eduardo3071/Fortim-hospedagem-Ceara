@@ -23,7 +23,7 @@ Deno.serve(async (req) => {
 
     if (!nights || nights < 1 || nights > 30) {
       return new Response(
-        JSON.stringify({ error: "Número de noites inválido (1-30)" }),
+        JSON.stringify({ error: "Número de diárias inválido (1-30)" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
