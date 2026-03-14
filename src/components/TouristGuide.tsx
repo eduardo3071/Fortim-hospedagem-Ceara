@@ -61,6 +61,7 @@ import porDoSolDunas1 from "@/assets/por-do-sol-dunas-1.png";
 import porDoSolDunas2 from "@/assets/por-do-sol-dunas-2.png";
 import jangada1 from "@/assets/jangada-1.png";
 import jangada2 from "@/assets/jangada-2.png";
+import mangue1 from "@/assets/mangue-1.png";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
