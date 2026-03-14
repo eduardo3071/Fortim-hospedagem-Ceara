@@ -122,7 +122,7 @@ const QuickActions = () => {
     }
   };
 
-  const nights = selectedDates ? calculateNights(selectedDates) : 0;
+  const nights = selectedDates ? calculateDays(selectedDates) : 0;
   const totalPrice = nights * PRICE_PER_NIGHT;
 
   const actions = [
