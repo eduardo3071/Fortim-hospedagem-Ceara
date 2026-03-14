@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MessageCircle, MapPin, Calendar, Phone, Copy, Check } from "lucide-react";
+import { MessageCircle, MapPin, Calendar, Phone, Copy, Check, CreditCard, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Dialog,
   DialogContent,
@@ -25,14 +27,17 @@ const WHATSAPP_MSG = encodeURIComponent(
 );
 const MAPS_URL =
   "https://www.google.com/maps/search/?api=1&query=Rua+Córrego+do+Maceió+456,+Barra,+Fortim-CE,+62815-000";
+const PRICE_PER_NIGHT = 200;
 
 const QuickActions = () => {
   const isMobile = useIsMobile();
+  const { toast } = useToast();
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [phoneOpen, setPhoneOpen] = useState(false);
   const [selectedDates, setSelectedDates] = useState<Date[] | undefined>();
   const [calendarMonth, setCalendarMonth] = useState<Date>(new Date());
   const [copied, setCopied] = useState(false);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
   const formatPhone = (num: string) =>
     `+${num.slice(0, 2)} (${num.slice(2, 4)}) ${num.slice(4, 9)}-${num.slice(9)}`;
@@ -41,6 +46,63 @@ const QuickActions = () => {
     navigator.clipboard.writeText(`+${PHONE_NUMBER}`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const calculateNights = (dates: Date[]) => {
+    if (dates.length < 2) return 0;
+    const sorted = [...dates].sort((a, b) => a.getTime() - b.getTime());
+    const first = sorted[0];
+    const last = sorted[sorted.length - 1];
+    const diffTime = last.getTime() - first.getTime();
+    return Math.round(diffTime / (1000 * 60 * 60 * 24));
+  };
+
+  const handlePayment = async () => {
+    if (!selectedDates || selectedDates.length < 2) {
+      toast({
+        title: "Selecione as datas",
+        description: "Escolha a data de entrada e saída (mínimo 2 datas).",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const nights = calculateNights(selectedDates);
+    if (nights < 1) {
+      toast({
+        title: "Período inválido",
+        description: "Selecione pelo menos 2 datas diferentes.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsProcessingPayment(true);
+    const sorted = [...selectedDates].sort((a, b) => a.getTime() - b.getTime());
+    const checkin = sorted[0].toLocaleDateString("pt-BR");
+    const checkout = sorted[sorted.length - 1].toLocaleDateString("pt-BR");
+
+    try {
+      const { data, error } = await supabase.functions.invoke("create-checkout-session", {
+        body: { nights, checkin, checkout },
+      });
+
+      if (error) throw error;
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("URL de pagamento não recebida");
+      }
+    } catch (err) {
+      console.error("Payment error:", err);
+      toast({
+        title: "Erro ao processar pagamento",
+        description: "Tente novamente ou entre em contato via WhatsApp.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsProcessingPayment(false);
+    }
   };
 
   const handleWhatsAppWithDates = () => {
@@ -65,6 +127,9 @@ const QuickActions = () => {
     }
   };
 
+  const nights = selectedDates ? calculateNights(selectedDates) : 0;
+  const totalPrice = nights * PRICE_PER_NIGHT;
+
   const actions = [
     {
       icon: MessageCircle,
@@ -75,18 +140,18 @@ const QuickActions = () => {
         window.open(`https://wa.me/${PHONE_NUMBER}?text=${WHATSAPP_MSG}`, "_blank"),
     },
     {
+      icon: CreditCard,
+      label: "Reservar e Pagar Online",
+      variant: "hero" as const,
+      description: "Pagamento seguro via Stripe",
+      onClick: () => setCalendarOpen(true),
+    },
+    {
       icon: MapPin,
       label: "Como Chegar",
       variant: "ocean" as const,
       description: "Abrir no GPS",
       onClick: () => window.open(MAPS_URL, "_blank"),
-    },
-    {
-      icon: Calendar,
-      label: "Ver Disponibilidade",
-      variant: "hero" as const,
-      description: "Calendário interativo",
-      onClick: () => setCalendarOpen(true),
     },
     {
       icon: Phone,
@@ -103,7 +168,6 @@ const QuickActions = () => {
   };
   const item = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } };
 
-  // Calendar content shared between Dialog and Drawer
   const CalendarContent = () => (
     <div className="flex flex-col items-center gap-4 p-2">
       <CalendarUI
@@ -112,21 +176,49 @@ const QuickActions = () => {
         onSelect={setSelectedDates}
         month={calendarMonth}
         onMonthChange={setCalendarMonth}
+        disabled={{ before: new Date() }}
         className="rounded-xl border shadow-sm"
       />
-      <Button
-        variant="whatsapp"
-        size="lg"
-        className="w-full"
-        onClick={handleWhatsAppWithDates}
-      >
-        <MessageCircle className="w-5 h-5 mr-2" />
-        Consultar disponibilidade via WhatsApp
-      </Button>
+
+      {nights > 0 && (
+        <div className="w-full rounded-xl bg-muted p-4 text-center space-y-1">
+          <p className="text-sm text-muted-foreground">
+            {nights} noite{nights > 1 ? "s" : ""} × R${PRICE_PER_NIGHT}
+          </p>
+          <p className="text-2xl font-bold text-foreground">
+            R${totalPrice.toLocaleString("pt-BR")}
+          </p>
+        </div>
+      )}
+
+      <div className="w-full space-y-2">
+        <Button
+          variant="hero"
+          size="lg"
+          className="w-full"
+          onClick={handlePayment}
+          disabled={nights < 1 || isProcessingPayment}
+        >
+          {isProcessingPayment ? (
+            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+          ) : (
+            <CreditCard className="w-5 h-5 mr-2" />
+          )}
+          {isProcessingPayment ? "Processando..." : "Pagar agora"}
+        </Button>
+        <Button
+          variant="whatsapp"
+          size="lg"
+          className="w-full"
+          onClick={handleWhatsAppWithDates}
+        >
+          <MessageCircle className="w-5 h-5 mr-2" />
+          Consultar via WhatsApp
+        </Button>
+      </div>
     </div>
   );
 
-  // Phone content shared between Dialog and Drawer
   const PhoneContent = () => (
     <div className="flex flex-col items-center gap-4 p-4">
       <p className="text-2xl font-semibold tracking-wide text-foreground">
@@ -179,13 +271,12 @@ const QuickActions = () => {
         </motion.div>
       </section>
 
-      {/* Calendar: Drawer on mobile, Dialog on desktop */}
       {isMobile ? (
         <Drawer open={calendarOpen} onOpenChange={setCalendarOpen}>
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>Selecione suas datas</DrawerTitle>
-              <DrawerDescription>Escolha as datas desejadas e consulte via WhatsApp</DrawerDescription>
+              <DrawerDescription>Escolha check-in e check-out • R${PRICE_PER_NIGHT}/noite</DrawerDescription>
             </DrawerHeader>
             <CalendarContent />
           </DrawerContent>
@@ -195,14 +286,13 @@ const QuickActions = () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Selecione suas datas</DialogTitle>
-              <DialogDescription>Escolha as datas desejadas e consulte via WhatsApp</DialogDescription>
+              <DialogDescription>Escolha check-in e check-out • R${PRICE_PER_NIGHT}/noite</DialogDescription>
             </DialogHeader>
             <CalendarContent />
           </DialogContent>
         </Dialog>
       )}
 
-      {/* Phone: Dialog on desktop only */}
       <Dialog open={phoneOpen} onOpenChange={setPhoneOpen}>
         <DialogContent>
           <DialogHeader>
