@@ -51,6 +51,8 @@ import praiaFuturo1 from "@/assets/praia-futuro-1.png";
 import praiaFuturo2 from "@/assets/praia-futuro-2.png";
 import praiaFuturo3 from "@/assets/praia-futuro-3.png";
 import praiaFuturo4 from "@/assets/praia-futuro-4.png";
+import buggy1 from "@/assets/buggy-1.png";
+import buggy2 from "@/assets/buggy-2.webp";
 
 type Category = "praias" | "restaurantes" | "passeios";
 
