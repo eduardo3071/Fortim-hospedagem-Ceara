@@ -300,8 +300,8 @@ const guideData: Record<Category, Place[]> = {
       distance: "2km", 
       rating: 5,
       images: [
-        { url: "https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=800", caption: "Cores mágicas do entardecer" },
-        { url: "https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=800", caption: "Momento perfeito" },
+        { url: porDoSolDunas1, caption: "Pôr do sol dourado nas dunas" },
+        { url: porDoSolDunas2, caption: "Turistas contemplando o entardecer" },
       ]
     },
     { 
