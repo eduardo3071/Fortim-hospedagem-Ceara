@@ -276,7 +276,8 @@ const guideData: Record<Category, Place[]> = {
       distance: "1km", 
       rating: 4.9,
       images: [
-        { url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800", caption: "Aulas para iniciantes" },
+        { url: kitesurf1, caption: "Kitesurf no mar cristalino" },
+        { url: kitesurf2, caption: "Manobra radical no kitesurf" },
       ]
     },
     { 
