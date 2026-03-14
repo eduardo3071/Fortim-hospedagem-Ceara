@@ -183,7 +183,7 @@ const QuickActions = () => {
       {nights > 0 && (
         <div className="w-full rounded-xl bg-muted p-4 text-center space-y-1">
           <p className="text-sm text-muted-foreground">
-            {nights} noite{nights > 1 ? "s" : ""} × R${PRICE_PER_NIGHT}
+            {nights} diária{nights > 1 ? "s" : ""} × R${PRICE_PER_NIGHT}
           </p>
           <p className="text-2xl font-bold text-foreground">
             R${totalPrice.toLocaleString("pt-BR")}
@@ -276,7 +276,7 @@ const QuickActions = () => {
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>Selecione suas datas</DrawerTitle>
-              <DrawerDescription>Escolha check-in e check-out • R${PRICE_PER_NIGHT}/noite</DrawerDescription>
+              <DrawerDescription>Escolha check-in e check-out • R${PRICE_PER_NIGHT}/diária</DrawerDescription>
             </DrawerHeader>
             <CalendarContent />
           </DrawerContent>
@@ -286,7 +286,7 @@ const QuickActions = () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Selecione suas datas</DialogTitle>
-              <DialogDescription>Escolha check-in e check-out • R${PRICE_PER_NIGHT}/noite</DialogDescription>
+              <DialogDescription>Escolha check-in e check-out • R${PRICE_PER_NIGHT}/diária</DialogDescription>
             </DialogHeader>
             <CalendarContent />
           </DialogContent>
