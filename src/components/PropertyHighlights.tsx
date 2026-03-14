@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Users, BedDouble, Wifi, Car, Waves, Coffee } from "lucide-react";
+import { Users, BedDouble, Wifi, Car, Bath, Coffee } from "lucide-react";
 
 const highlights = [
   { icon: Users, label: "Até 10 pessoas", description: "Espaço confortável" },
