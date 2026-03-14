@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 
-const PHONE_NUMBER = "4915754439503";
+const PHONE_NUMBER = "5511930782906";
 const WHATSAPP_MSG = encodeURIComponent(
   "Olá! Vim pelo site do Pontal Sereias e gostaria de mais informações."
 );

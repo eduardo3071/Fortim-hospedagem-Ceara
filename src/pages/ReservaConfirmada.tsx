@@ -3,7 +3,7 @@ import { CheckCircle, Home, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
-const PHONE_NUMBER = "4915754439503";
+const PHONE_NUMBER = "5511930782906";
 
 const ReservaConfirmada = () => {
   const whatsappMsg = encodeURIComponent(

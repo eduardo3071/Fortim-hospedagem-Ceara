@@ -73,7 +73,7 @@ const LeadCapture = () => {
       `Olá! Meu nome é ${name.trim()} e acabei de me cadastrar no site do Pontal Sereias. Gostaria de reivindicar meu cupom de 10% de desconto na próxima estadia! 🌴`
     );
     setTimeout(() => {
-      window.open(`https://wa.me/4915754439503?text=${msg}`, "_blank");
+      window.open(`https://wa.me/5511930782906?text=${msg}`, "_blank");
     }, 1500);
   };
 
