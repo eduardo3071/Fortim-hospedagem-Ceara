@@ -6,8 +6,6 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const PRICE_PER_NIGHT_CENTS = 20000; // R$200
-
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -19,38 +17,59 @@ Deno.serve(async (req) => {
       throw new Error("STRIPE_SECRET_KEY is not configured");
     }
 
-    const { nights, checkin, checkout } = await req.json();
+    const { nights, checkin, checkout, amount, subtotal, cleaningFee } = await req.json();
 
-    if (!nights || nights < 1 || nights > 30) {
+    if (!nights || nights < 1 || nights > 60) {
       return new Response(
-        JSON.stringify({ error: "Número de diárias inválido (1-30)" }),
+        JSON.stringify({ error: "Número de noites inválido (1-60)" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    if (!amount || amount < 1) {
+      return new Response(
+        JSON.stringify({ error: "Valor inválido" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
     const stripe = new Stripe(stripeKey, { apiVersion: "2025-04-30.basil" });
 
-    const amount = nights * PRICE_PER_NIGHT_CENTS;
+    const amountCents = Math.round(amount * 100);
+    const subtotalCents = Math.round((subtotal ?? (amount - (cleaningFee ?? 150))) * 100);
+    const cleaningFeeCents = Math.round((cleaningFee ?? 150) * 100);
 
-    const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
     const siteUrl = "https://pontalsereias.lovable.app";
+
+    const lineItems = [
+      {
+        price_data: {
+          currency: "brl",
+          product_data: {
+            name: "Hospedagem Pontal Sereias",
+            description: `${nights} noite${nights > 1 ? "s" : ""} em Fortim-CE${checkin && checkout ? ` (${checkin} a ${checkout})` : ""}`,
+          },
+          unit_amount: subtotalCents,
+        },
+        quantity: 1,
+      },
+      {
+        price_data: {
+          currency: "brl",
+          product_data: {
+            name: "Taxa de limpeza",
+            description: "Taxa única de limpeza por reserva",
+          },
+          unit_amount: cleaningFeeCents,
+        },
+        quantity: 1,
+      },
+    ];
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
-      line_items: [
-        {
-          price_data: {
-            currency: "brl",
-            product_data: {
-              name: "Reserva Pontal Sereias",
-              description: `Hospedagem em Fortim-CE — ${nights} diária${nights > 1 ? "s" : ""}${checkin && checkout ? ` (${checkin} a ${checkout})` : ""}`,
-            },
-            unit_amount: amount,
-          },
-          quantity: 1,
-        },
-      ],
+      line_items: lineItems,
       success_url: `${siteUrl}/reserva-confirmada?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/reserva-cancelada`,
     });

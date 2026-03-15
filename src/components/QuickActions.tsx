@@ -20,6 +20,13 @@ import {
   DrawerDescription,
 } from "@/components/ui/drawer";
 import { Calendar as CalendarUI } from "@/components/ui/calendar";
+import { type DateRange } from "react-day-picker";
+import {
+  calculatePricing,
+  SEASON_LABELS,
+  CLEANING_FEE,
+  type PricingBreakdown,
+} from "@/lib/pricing";
 
 const PHONE_NUMBER = "5511930782906";
 const WHATSAPP_MSG = encodeURIComponent(
@@ -27,14 +34,13 @@ const WHATSAPP_MSG = encodeURIComponent(
 );
 const MAPS_URL =
   "https://www.google.com/maps/search/?api=1&query=Rua+Córrego+do+Maceió+456,+Barra,+Fortim-CE,+62815-000";
-const PRICE_PER_NIGHT = 200;
 
 const QuickActions = () => {
   const isMobile = useIsMobile();
   const { toast } = useToast();
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [phoneOpen, setPhoneOpen] = useState(false);
-  const [selectedDates, setSelectedDates] = useState<Date[] | undefined>();
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [calendarMonth, setCalendarMonth] = useState<Date>(new Date());
   const [copied, setCopied] = useState(false);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
@@ -48,38 +54,35 @@ const QuickActions = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const calculateDays = (dates: Date[]) => {
-    return dates.length;
-  };
+  const pricing: PricingBreakdown | null =
+    dateRange?.from && dateRange?.to
+      ? calculatePricing(dateRange.from, dateRange.to)
+      : null;
 
   const handlePayment = async () => {
-    if (!selectedDates || selectedDates.length < 2) {
+    if (!pricing || pricing.nights.length < 1) {
       toast({
         title: "Selecione as datas",
-        description: "Escolha a data de entrada e saída (mínimo 2 datas).",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    const nights = calculateDays(selectedDates);
-    if (nights < 1) {
-      toast({
-        title: "Período inválido",
-        description: "Selecione pelo menos 2 datas diferentes.",
+        description: "Escolha a data de check-in e check-out.",
         variant: "destructive",
       });
       return;
     }
 
     setIsProcessingPayment(true);
-    const sorted = [...selectedDates].sort((a, b) => a.getTime() - b.getTime());
-    const checkin = sorted[0].toLocaleDateString("pt-BR");
-    const checkout = sorted[sorted.length - 1].toLocaleDateString("pt-BR");
+    const checkin = dateRange!.from!.toLocaleDateString("pt-BR");
+    const checkout = dateRange!.to!.toLocaleDateString("pt-BR");
 
     try {
       const { data, error } = await supabase.functions.invoke("create-checkout-session", {
-        body: { nights, checkin, checkout },
+        body: {
+          nights: pricing.nights.length,
+          checkin,
+          checkout,
+          amount: pricing.total,
+          subtotal: pricing.subtotal,
+          cleaningFee: pricing.cleaningFee,
+        },
       });
 
       if (error) throw error;
@@ -102,12 +105,13 @@ const QuickActions = () => {
 
   const handleWhatsAppWithDates = () => {
     let msg = "Olá! Vim pelo site do Pontal Sereias e gostaria de verificar disponibilidade";
-    if (selectedDates && selectedDates.length > 0) {
-      const formatted = selectedDates
-        .sort((a, b) => a.getTime() - b.getTime())
-        .map((d) => d.toLocaleDateString("pt-BR"))
-        .join(", ");
-      msg += ` para as datas: ${formatted}`;
+    if (dateRange?.from && dateRange?.to) {
+      const checkin = dateRange.from.toLocaleDateString("pt-BR");
+      const checkout = dateRange.to.toLocaleDateString("pt-BR");
+      msg += ` para o período de ${checkin} a ${checkout}`;
+      if (pricing) {
+        msg += ` (${pricing.nights.length} noite${pricing.nights.length > 1 ? "s" : ""}, total R$${pricing.total.toLocaleString("pt-BR")})`;
+      }
     }
     msg += ".";
     window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
@@ -122,8 +126,18 @@ const QuickActions = () => {
     }
   };
 
-  const nights = selectedDates ? calculateDays(selectedDates) : 0;
-  const totalPrice = nights * PRICE_PER_NIGHT;
+  // Group nights by season for the breakdown summary
+  const seasonSummary = pricing
+    ? pricing.nights.reduce(
+        (acc, n) => {
+          if (!acc[n.season]) acc[n.season] = { count: 0, total: 0, price: n.price };
+          acc[n.season].count++;
+          acc[n.season].total += n.price;
+          return acc;
+        },
+        {} as Record<string, { count: number; total: number; price: number }>
+      )
+    : null;
 
   const actions = [
     {
@@ -166,23 +180,38 @@ const QuickActions = () => {
   const CalendarContent = () => (
     <div className="flex flex-col items-center gap-4 p-2">
       <CalendarUI
-        mode="multiple"
-        selected={selectedDates}
-        onSelect={setSelectedDates}
+        mode="range"
+        selected={dateRange}
+        onSelect={setDateRange}
         month={calendarMonth}
         onMonthChange={setCalendarMonth}
         disabled={{ before: new Date() }}
-        className="rounded-xl border shadow-sm"
+        numberOfMonths={isMobile ? 1 : 2}
+        className="rounded-xl border shadow-sm pointer-events-auto"
       />
 
-      {nights > 0 && (
-        <div className="w-full rounded-xl bg-muted p-4 text-center space-y-1">
-          <p className="text-sm text-muted-foreground">
-            {nights} diária{nights > 1 ? "s" : ""} × R${PRICE_PER_NIGHT}
-          </p>
-          <p className="text-2xl font-bold text-foreground">
-            R${totalPrice.toLocaleString("pt-BR")}
-          </p>
+      {pricing && pricing.nights.length > 0 && (
+        <div className="w-full rounded-xl bg-muted p-4 space-y-2">
+          {seasonSummary &&
+            Object.entries(seasonSummary).map(([season, data]) => (
+              <div key={season} className="flex justify-between text-sm text-muted-foreground">
+                <span>
+                  {data.count} noite{data.count > 1 ? "s" : ""} — Temporada{" "}
+                  {SEASON_LABELS[season as keyof typeof SEASON_LABELS]} (R${data.price})
+                </span>
+                <span>R${data.total.toLocaleString("pt-BR")}</span>
+              </div>
+            ))}
+          <div className="flex justify-between text-sm text-muted-foreground">
+            <span>Taxa de limpeza</span>
+            <span>R${CLEANING_FEE}</span>
+          </div>
+          <div className="border-t border-border pt-2 flex justify-between">
+            <span className="font-semibold text-foreground">Total</span>
+            <span className="text-2xl font-bold text-foreground">
+              R${pricing.total.toLocaleString("pt-BR")}
+            </span>
+          </div>
         </div>
       )}
 
@@ -192,7 +221,7 @@ const QuickActions = () => {
           size="lg"
           className="w-full"
           onClick={handlePayment}
-          disabled={nights < 1 || isProcessingPayment}
+          disabled={!pricing || pricing.nights.length < 1 || isProcessingPayment}
         >
           {isProcessingPayment ? (
             <Loader2 className="w-5 h-5 mr-2 animate-spin" />
@@ -271,17 +300,17 @@ const QuickActions = () => {
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>Selecione suas datas</DrawerTitle>
-              <DrawerDescription>Escolha check-in e check-out • R${PRICE_PER_NIGHT}/diária</DrawerDescription>
+              <DrawerDescription>Escolha check-in e check-out</DrawerDescription>
             </DrawerHeader>
             <CalendarContent />
           </DrawerContent>
         </Drawer>
       ) : (
         <Dialog open={calendarOpen} onOpenChange={setCalendarOpen}>
-          <DialogContent>
+          <DialogContent className="max-w-2xl">
             <DialogHeader>
               <DialogTitle>Selecione suas datas</DialogTitle>
-              <DialogDescription>Escolha check-in e check-out • R${PRICE_PER_NIGHT}/diária</DialogDescription>
+              <DialogDescription>Escolha check-in e check-out</DialogDescription>
             </DialogHeader>
             <CalendarContent />
           </DialogContent>
