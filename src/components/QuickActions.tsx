@@ -45,6 +45,7 @@ const QuickActions = () => {
   const [calendarMonth, setCalendarMonth] = useState<Date>(new Date());
   const [copied, setCopied] = useState(false);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
 
   const formatPhone = (num: string) =>
     `+${num.slice(0, 2)} (${num.slice(2, 4)}) ${num.slice(4, 9)}-${num.slice(9)}`;
