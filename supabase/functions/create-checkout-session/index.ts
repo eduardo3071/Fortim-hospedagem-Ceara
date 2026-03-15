@@ -66,13 +66,30 @@ Deno.serve(async (req) => {
       },
     ];
 
-    const session = await stripe.checkout.sessions.create({
+    const sessionParams: any = {
       payment_method_types: ["card"],
       mode: "payment",
       line_items: lineItems,
+      allow_promotion_codes: true,
       success_url: `${siteUrl}/reserva-confirmada?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/reserva-cancelada`,
-    });
+    };
+
+    // If a specific coupon code is provided, apply it directly
+    if (couponCode) {
+      try {
+        // Try to find the coupon by promotion code
+        const promoCodes = await stripe.promotionCodes.list({ code: couponCode, active: true, limit: 1 });
+        if (promoCodes.data.length > 0) {
+          sessionParams.discounts = [{ promotion_code: promoCodes.data[0].id }];
+          delete sessionParams.allow_promotion_codes;
+        }
+      } catch (e) {
+        console.warn("Coupon lookup failed, allowing manual entry:", e);
+      }
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionParams);
 
     return new Response(JSON.stringify({ url: session.url }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
