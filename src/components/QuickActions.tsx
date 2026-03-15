@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MessageCircle, MapPin, Calendar, Phone, Copy, Check, CreditCard, Loader2 } from "lucide-react";
+import { MessageCircle, MapPin, Calendar, Phone, Copy, Check, CreditCard, Loader2, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
