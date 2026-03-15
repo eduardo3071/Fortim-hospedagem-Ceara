@@ -219,6 +219,17 @@ const QuickActions = () => {
       )}
 
       <div className="w-full space-y-2">
+        <div className="flex gap-2">
+          <div className="relative flex-1">
+            <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder="Cupom de desconto"
+              value={couponCode}
+              onChange={(e) => setCouponCode(e.target.value)}
+              className="pl-9"
+            />
+          </div>
+        </div>
         <Button
           variant="hero"
           size="lg"
