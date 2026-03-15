@@ -17,7 +17,7 @@ Deno.serve(async (req) => {
       throw new Error("STRIPE_SECRET_KEY is not configured");
     }
 
-    const { nights, checkin, checkout, amount, subtotal, cleaningFee } = await req.json();
+    const { nights, checkin, checkout, amount, subtotal, cleaningFee, couponCode } = await req.json();
 
     if (!nights || nights < 1 || nights > 60) {
       return new Response(
