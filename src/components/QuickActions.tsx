@@ -110,7 +110,7 @@ const QuickActions = () => {
       const checkout = dateRange.to.toLocaleDateString("pt-BR");
       msg += ` para o período de ${checkin} a ${checkout}`;
       if (pricing) {
-        msg += ` (${pricing.nights.length} noite${pricing.nights.length > 1 ? "s" : ""}, total R$${pricing.total.toLocaleString("pt-BR")})`;
+        msg += ` (${pricing.nights.length} diária${pricing.nights.length > 1 ? "s" : ""}, total R$${pricing.total.toLocaleString("pt-BR")})`;
       }
     }
     msg += ".";
@@ -196,7 +196,7 @@ const QuickActions = () => {
             Object.entries(seasonSummary).map(([season, data]) => (
               <div key={season} className="flex justify-between text-sm text-muted-foreground">
                 <span>
-                  {data.count} noite{data.count > 1 ? "s" : ""} — Temporada{" "}
+                  {data.count} diária{data.count > 1 ? "s" : ""} — Temporada{" "}
                   {SEASON_LABELS[season as keyof typeof SEASON_LABELS]} (R${data.price})
                 </span>
                 <span>R${data.total.toLocaleString("pt-BR")}</span>
