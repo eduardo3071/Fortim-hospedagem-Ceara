@@ -84,6 +84,7 @@ const QuickActions = () => {
           amount: pricing.total,
           subtotal: pricing.subtotal,
           cleaningFee: pricing.cleaningFee,
+          couponCode: couponCode.trim() || undefined,
         },
       });
 
