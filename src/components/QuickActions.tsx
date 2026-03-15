@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MessageCircle, MapPin, Calendar, Phone, Copy, Check, CreditCard, Loader2 } from "lucide-react";
+import { MessageCircle, MapPin, Calendar, Phone, Copy, Check, CreditCard, Loader2, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -44,6 +45,7 @@ const QuickActions = () => {
   const [calendarMonth, setCalendarMonth] = useState<Date>(new Date());
   const [copied, setCopied] = useState(false);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
 
   const formatPhone = (num: string) =>
     `+${num.slice(0, 2)} (${num.slice(2, 4)}) ${num.slice(4, 9)}-${num.slice(9)}`;
@@ -82,6 +84,7 @@ const QuickActions = () => {
           amount: pricing.total,
           subtotal: pricing.subtotal,
           cleaningFee: pricing.cleaningFee,
+          couponCode: couponCode.trim() || undefined,
         },
       });
 
@@ -216,6 +219,17 @@ const QuickActions = () => {
       )}
 
       <div className="w-full space-y-2">
+        <div className="flex gap-2">
+          <div className="relative flex-1">
+            <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder="Cupom de desconto"
+              value={couponCode}
+              onChange={(e) => setCouponCode(e.target.value)}
+              className="pl-9"
+            />
+          </div>
+        </div>
         <Button
           variant="hero"
           size="lg"
