@@ -110,7 +110,7 @@ const QuickActions = () => {
       const checkout = dateRange.to.toLocaleDateString("pt-BR");
       msg += ` para o período de ${checkin} a ${checkout}`;
       if (pricing) {
-        msg += ` (${pricing.nights.length} noite${pricing.nights.length > 1 ? "s" : ""}, total R$${pricing.total.toLocaleString("pt-BR")})`;
+        msg += ` (${pricing.nights.length} diária${pricing.nights.length > 1 ? "s" : ""}, total R$${pricing.total.toLocaleString("pt-BR")})`;
       }
     }
     msg += ".";
