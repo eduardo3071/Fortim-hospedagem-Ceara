@@ -115,19 +115,19 @@ export function getNightPrice(date: Date): number {
   return SEASON_PRICES[getSeason(date)];
 }
 
-/** Generate all nights between check-in and check-out (exclusive of check-out). */
+/** Generate all dates between check-in and check-out (INCLUSIVE of both). */
 export function getNightsDates(checkin: Date, checkout: Date): Date[] {
-  const nights: Date[] = [];
+  const dates: Date[] = [];
   const current = new Date(checkin);
   current.setHours(0, 0, 0, 0);
   const end = new Date(checkout);
   end.setHours(0, 0, 0, 0);
 
-  while (current < end) {
-    nights.push(new Date(current));
+  while (current <= end) {
+    dates.push(new Date(current));
     current.setDate(current.getDate() + 1);
   }
-  return nights;
+  return dates;
 }
 
 export interface PricingBreakdown {
