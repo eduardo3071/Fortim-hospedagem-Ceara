@@ -14,6 +14,10 @@ import hero8 from "@/assets/hero-8.jpg";
 import hero9 from "@/assets/hero-9.jpg";
 import hero10 from "@/assets/hero-10.jpg";
 import hero11 from "@/assets/hero-11.jpg";
+import hero12 from "@/assets/hero-12.png";
+import hero13 from "@/assets/hero-13.png";
+import hero14 from "@/assets/hero-14.png";
+import hero15 from "@/assets/hero-15.png";
 
 const galleryImages = [
   { src: heroImage, caption: "Vista frontal do Pontal Sereias" },
@@ -27,6 +31,10 @@ const galleryImages = [
   { src: hero8, caption: "Conforto e natureza" },
   { src: hero9, caption: "Experiência completa" },
   { src: hero10, caption: "Área gourmet" },
+  { src: hero12, caption: "Lavabo" },
+  { src: hero13, caption: "WC suíte" },
+  { src: hero14, caption: "Mezanino" },
+  { src: hero15, caption: "Varanda namoradeira" },
   { src: hero11, caption: "Pôr do sol" },
 ];
 
