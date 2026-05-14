@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Users, BedDouble, Wifi, Car, Bath, Coffee } from "lucide-react";
 
 const highlights = [
-  { icon: Users, label: "Até 10 pessoas", description: "Espaço confortável" },
+  { icon: Users, label: "Até 10 pessoas", description: "confortavelmente" },
   { icon: BedDouble, label: "3 quartos", description: "Todos com ar" },
   { icon: Wifi, label: "Wi-Fi rápido", description: "Trabalhe remotamente" },
   { icon: Car, label: "Estacionamento", description: "Vaga privativa" },
