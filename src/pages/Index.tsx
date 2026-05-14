@@ -2,6 +2,7 @@ import Hero from "@/components/Hero";
 import QuickActions from "@/components/QuickActions";
 import PropertyHighlights from "@/components/PropertyHighlights";
 import PhotoGallery from "@/components/PhotoGallery";
+import CasaMaanaim from "@/components/CasaMaanaim";
 import WeatherWidget from "@/components/WeatherWidget";
 import TouristGuide from "@/components/TouristGuide";
 
@@ -16,6 +17,7 @@ const Index = () => {
       <QuickActions />
       <PropertyHighlights />
       <PhotoGallery />
+      <CasaMaanaim />
       <WeatherWidget />
       <TouristGuide />
       
