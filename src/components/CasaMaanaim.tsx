@@ -5,10 +5,12 @@ import img1 from "@/assets/maanaim-1.png";
 import img2 from "@/assets/maanaim-2.png";
 import img3 from "@/assets/maanaim-3.png";
 import img4 from "@/assets/maanaim-4.png";
+import img5 from "@/assets/maanaim-5.png";
 
 const images = [
   { src: img2, caption: "Sol, mar e boas vibrações" },
   { src: img1, caption: "Regras da Casa" },
+  { src: img5, caption: "Mais regras e Wi-Fi" },
   { src: img3, caption: "Cuide de si e do meio ambiente" },
   { src: img4, caption: "Prevenir é preciso" },
 ];
