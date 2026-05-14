@@ -29,7 +29,7 @@ import {
   type PricingBreakdown,
 } from "@/lib/pricing";
 
-const PHONE_NUMBER = "5511930782906";
+const PHONE_NUMBER = "5511933190069";
 const WHATSAPP_MSG = encodeURIComponent(
   "Olá! Vim pelo site do Pontal Sereias e gostaria de verificar disponibilidade."
 );
