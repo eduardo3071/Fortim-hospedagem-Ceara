@@ -331,7 +331,6 @@ const guideData: Record<Category, Place[]> = {
 
 const categories = [
   { id: "praias" as Category, label: "Praias", icon: Waves, emoji: "🏖️" },
-  { id: "restaurantes" as Category, label: "Restaurantes", icon: Utensils, emoji: "🍽️" },
   { id: "passeios" as Category, label: "Passeios", icon: MapPin, emoji: "🎯" },
 ];
 
