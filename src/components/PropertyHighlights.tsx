@@ -3,7 +3,7 @@ import { Users, BedDouble, Wifi, Car, Bath, Coffee } from "lucide-react";
 
 const highlights = [
   { icon: Users, label: "Até 10 pessoas", description: "confortavelmente" },
-  { icon: BedDouble, label: "3 quartos", description: "Todos com ar" },
+  { icon: BedDouble, label: "3 quartos", description: "2 ar-condicionado + 1 ventilador" },
   { icon: Wifi, label: "Wi-Fi rápido", description: "Trabalhe remotamente" },
   { icon: Car, label: "Estacionamento", description: "Vaga privativa" },
   { icon: Bath, label: "2 banheiros", description: "1 lavabo" },
