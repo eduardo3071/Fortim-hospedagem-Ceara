@@ -127,7 +127,8 @@ export function getNightsDates(checkin: Date, checkout: Date): Date[] {
     dates.push(new Date(current));
     current.setDate(current.getDate() + 1);
   }
-  return dates;
+  // Exclude the checkout date — guests don't pay for the night they leave
+  return dates.slice(0, -1);
 }
 
 export interface PricingBreakdown {
