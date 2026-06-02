@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { MessageCircle, MapPin, Calendar, Phone, Copy, Check, CreditCard, Loader2, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -46,6 +46,52 @@ const QuickActions = () => {
   const [copied, setCopied] = useState(false);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [couponCode, setCouponCode] = useState("");
+  const [blockedDates, setBlockedDates] = useState<Date[]>([]);
+
+  // Load Airbnb-blocked dates (cached server-side, refreshed every 20min)
+  useEffect(() => {
+    let cancelled = false;
+    const load = async () => {
+      try {
+        const { data, error } = await supabase.functions.invoke("airbnb-availability");
+        if (error) throw error;
+        const list: string[] = data?.blockedDates ?? [];
+        if (cancelled) return;
+        setBlockedDates(
+          list.map((iso) => {
+            const [y, m, d] = iso.split("-").map(Number);
+            return new Date(y, m - 1, d);
+          })
+        );
+      } catch (e) {
+        console.warn("Falha ao carregar disponibilidade Airbnb:", e);
+      }
+    };
+    load();
+    const id = setInterval(load, 20 * 60 * 1000);
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
+  }, []);
+
+  const blockedKeys = useMemo(
+    () => new Set(blockedDates.map((d) => d.toDateString())),
+    [blockedDates]
+  );
+
+  const rangeHasBlocked = (from?: Date, to?: Date): boolean => {
+    if (!from || !to) return false;
+    const cur = new Date(from);
+    cur.setHours(0, 0, 0, 0);
+    const end = new Date(to);
+    end.setHours(0, 0, 0, 0);
+    while (cur < end) {
+      if (blockedKeys.has(cur.toDateString())) return true;
+      cur.setDate(cur.getDate() + 1);
+    }
+    return false;
+  };
 
   const formatPhone = (num: string) =>
     `+${num.slice(0, 2)} (${num.slice(2, 4)}) ${num.slice(4, 9)}-${num.slice(9)}`;
@@ -71,6 +117,15 @@ const QuickActions = () => {
       return;
     }
 
+    if (rangeHasBlocked(dateRange?.from, dateRange?.to)) {
+      toast({
+        title: "Datas indisponíveis",
+        description: "Estas datas já estão reservadas no Airbnb.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsProcessingPayment(true);
     const checkin = dateRange!.from!.toLocaleDateString("pt-BR");
     const checkout = dateRange!.to!.toLocaleDateString("pt-BR");
@@ -88,7 +143,18 @@ const QuickActions = () => {
         },
       });
 
-      if (error) throw error;
+      if (error) {
+        const ctx = (error as { context?: Response }).context;
+        if (ctx && typeof ctx.json === "function") {
+          try {
+            const body = await ctx.json();
+            if (body?.error) throw new Error(body.error);
+          } catch (_) {
+            // fall through
+          }
+        }
+        throw error;
+      }
       if (data?.url) {
         window.location.href = data.url;
       } else {
@@ -96,9 +162,10 @@ const QuickActions = () => {
       }
     } catch (err) {
       console.error("Payment error:", err);
+      const msg = err instanceof Error ? err.message : "Tente novamente ou entre em contato via WhatsApp.";
       toast({
         title: "Erro ao processar pagamento",
-        description: "Tente novamente ou entre em contato via WhatsApp.",
+        description: msg,
         variant: "destructive",
       });
     } finally {
@@ -185,10 +252,25 @@ const QuickActions = () => {
       <CalendarUI
         mode="range"
         selected={dateRange}
-        onSelect={setDateRange}
+        onSelect={(range) => {
+          if (rangeHasBlocked(range?.from, range?.to)) {
+            toast({
+              title: "Datas indisponíveis",
+              description: "Estas datas já estão reservadas no Airbnb.",
+              variant: "destructive",
+            });
+            setDateRange(undefined);
+            return;
+          }
+          setDateRange(range);
+        }}
         month={calendarMonth}
         onMonthChange={setCalendarMonth}
-        disabled={{ before: new Date() }}
+        disabled={[{ before: new Date() }, ...blockedDates]}
+        modifiers={{ blocked: blockedDates }}
+        modifiersClassNames={{
+          blocked: "line-through opacity-40 bg-destructive/10 text-destructive",
+        }}
         numberOfMonths={isMobile ? 1 : 2}
         className="rounded-xl border shadow-sm pointer-events-auto"
       />
