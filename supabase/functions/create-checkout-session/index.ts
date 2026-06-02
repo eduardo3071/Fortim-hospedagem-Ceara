@@ -33,6 +33,48 @@ Deno.serve(async (req) => {
       );
     }
 
+    // Re-validate availability against the Airbnb iCal to prevent overbooking
+    if (checkin && checkout) {
+      try {
+        const supabaseUrl = Deno.env.get('SUPABASE_URL');
+        const anonKey = Deno.env.get('SUPABASE_ANON_KEY');
+        if (supabaseUrl && anonKey) {
+          const availRes = await fetch(
+            `${supabaseUrl}/functions/v1/airbnb-availability?refresh=1`,
+            { headers: { Authorization: `Bearer ${anonKey}`, apikey: anonKey } }
+          );
+          if (availRes.ok) {
+            const { blockedDates } = (await availRes.json()) as { blockedDates: string[] };
+            const blocked = new Set(blockedDates ?? []);
+
+            // checkin/checkout come as pt-BR strings "dd/mm/yyyy"
+            const parseBR = (s: string): Date | null => {
+              const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(s);
+              if (!m) return null;
+              return new Date(Date.UTC(+m[3], +m[2] - 1, +m[1]));
+            };
+            const ci = parseBR(checkin);
+            const co = parseBR(checkout);
+            if (ci && co) {
+              const cur = new Date(ci);
+              while (cur < co) {
+                const iso = cur.toISOString().slice(0, 10);
+                if (blocked.has(iso)) {
+                  return new Response(
+                    JSON.stringify({ error: 'Estas datas já estão reservadas no Airbnb.' }),
+                    { status: 409, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+                  );
+                }
+                cur.setUTCDate(cur.getUTCDate() + 1);
+              }
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('Availability re-validation failed, proceeding:', e);
+      }
+    }
+
     const stripe = new Stripe(stripeKey, { apiVersion: "2025-04-30.basil" });
 
     const amountCents = Math.round(amount * 100);
